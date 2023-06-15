@@ -60,7 +60,6 @@ export class AuthService {
     this.afauth.createUserWithEmailAndPassword(usuario.email, usuario.password)
       .then((res) => {
         res.user?.sendEmailVerification();
-        console.log(archivos);
         this.alerta.lanzarAlertaExito("Pronto recibirá un mail para confirmar su mail.")
         this.st.subirImagenes(usuario.email, archivos);
         this.st.addUsuario(usuario, archivos);

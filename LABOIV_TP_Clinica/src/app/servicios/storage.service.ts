@@ -18,6 +18,7 @@ export class StorageService {
   coleccion: string = 'usuarios';
   public listaUrldelMismo: string[] = [];
   public listaUrlParaVarios: string[] = [];
+  public usuarioObj: any;
 
   constructor(private db: AngularFirestore,
               private alerta: AlertService,
@@ -74,41 +75,32 @@ export class StorageService {
     await uploadBytes(imgRef, element)
       .then()
       .catch(error => console.log(error));
-
-    // for (let index = 0; index < files.length; index++) {
-    //   const imgRef = ref(this.st, 'images/' + user + "/" + new Date().getTime().toString());
-    //   const element = files[index];
-    //   console.log(element);
-    //   console.log(index);
-    //   await uploadBytes(imgRef, element)
-    //     .then()
-    //     .catch(error => console.log(error));
-    // }
   }
 
   async getImages(user: string) {
-    console.log("llega al getimages");
-    console.log(user);
-    this.listaUrldelMismo = [];
     const storage = firebase.storage();
     const imagesRef = storage.ref('images/' + user);
-    await listAll(imagesRef).then(async res => {
-      //lista de primeras fotos de varios user
-      await getDownloadURL(res.items[0]).then(res => {
-        console.log(res) 
-        this.listaUrlParaVarios.push(res); 
-        });
-
-      //lista de fotos de un mismo user
+    await listAll(imagesRef).then(async res => {  
       for (let item of res.items) {
-        console.log(res.items);
-        console.log(item);
         await getDownloadURL(item).then(res => {
-          console.log(res) 
           this.listaUrldelMismo.push(res); 
           });
       }
     }).catch(error => console.log(error));
+  }
+
+  async getImagenes(users: any) {
+    this.listaUrlParaVarios = [];
+    for(let i = 0; i < users.length; i++)
+    {
+      const storage = firebase.storage();
+      const imagesRef = storage.ref('images/' + users[i]);
+      await listAll(imagesRef).then(async res => {
+        await getDownloadURL(res.items[0]).then(res=> {
+          this.listaUrlParaVarios.push(res);
+        })
+      })
+    }
   }
   ///VIEJAS
 
@@ -129,6 +121,32 @@ export class StorageService {
       .catch((error) => {
         console.log('Error grabando: ', error);
       });
+  }
+
+  getUser(mail: any)
+  {
+    this.usuarioObj = new Usuario('', '', '', '', '', '', '', '', '');
+    firebase
+    .firestore()
+    .collection(this.coleccion)
+    .where('email', '==', mail)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.usuarioObj  = new Usuario(doc.data()["nombre"],
+                                    doc.data()["apellido"],
+                                    doc.data()["dni"],
+                                    doc.data()["edad"],
+                                    doc.data()["email"],
+                                    '',
+                                    doc.data()["rol"],
+                                    doc.data()["obraSocial"],
+                                    doc.data()["especialidad"])
+      });
+    })
+    .catch((error) => {
+      console.log('Error grabando: ', error);
+    });
   }
 
   getNombre(mail: any)

@@ -22,7 +22,6 @@ export class Usuario {
                 rol: any,
                 obraSocial = '',
                 especialidad  = '',
-                imagenes: string[] = []
                 // photoUrl = '',
                 // imageUrl = []
                 ){

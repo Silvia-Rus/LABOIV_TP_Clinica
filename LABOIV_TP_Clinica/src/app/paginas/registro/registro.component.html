@@ -115,7 +115,7 @@
               </small>
             </div>
             <!-- solo para registrar médicos -->
-            <div class="col-md-6" *ngIf="getValue('rol').value == 'Especialista'">
+            <div class="col-6" *ngIf="this.rol == 'Especialista'">
               <label for="especialidad" class="form-label">Especialidad</label>
               <select 
                 formControlName="especialidad"
@@ -130,7 +130,7 @@
               </select>
             </div>
 
-            <div class="col-6" *ngIf="getValue('rol').value == 'Especialista'">
+            <div class="col-6" *ngIf="this.rol == 'Especialista'">
               <label for="especialidad" class="form-label">Otra:</label>
               <input
                   formControlName="especialidad"
@@ -141,7 +141,7 @@
               </div>
             </div>
             <!-- solo para registrar pacientes -->
-            <div class="col-12" *ngIf="getValue('rol').value == 'Paciente'">
+            <div class="col-12" *ngIf="this.rol == 'Paciente'">
               <label for="obraSocial" class="form-label">Obra social</label>
               <input 
                 formControlName="obraSocial"
@@ -158,7 +158,7 @@
                 id="imagenUno"
                 (change)="cargarImagen($event)">
             </div>
-            <div class="col-12" *ngIf="getValue('rol').value == 'Paciente'">
+            <div class="col-12" *ngIf="this.rol == 'Paciente'">
               <label for="imagenDos" class="form-label">Imagen</label>
               <input 
                 formControlName="imagenDos"

@@ -67,18 +67,18 @@ subirImagenes(usuario: string)
 }
 
 crearUsuario(){
-    // const rol = this.form.value.rol;
-    // const usuario = new Usuario(this.form.value.nombre,
-    //                               this.form.value.apellido,
-    //                               this.form.value.dni, 
-    //                               this.form.value.edad,
-    //                               this.form.value.email, 
-    //                               this.form.value.password, 
-    //                               this.rol,
-    //                               // this.form.value.rol,
-    //                               this.form.value.obraSocial, 
-    //                               this.form.value.especialidad);
-    // this.db.registro(usuario, this.archivos);
+    const rol = this.form.value.rol;
+    const usuario = new Usuario(this.form.value.nombre,
+                                  this.form.value.apellido,
+                                  this.form.value.dni, 
+                                  this.form.value.edad,
+                                  this.form.value.email, 
+                                  this.form.value.password, 
+                                  this.rol,
+                                  // this.form.value.rol,
+                                  this.form.value.obraSocial, 
+                                  this.form.value.especialidad);
+    this.db.registro(usuario, this.archivos);
     console.log(this.rol);
     //resetear
     //this.reset();

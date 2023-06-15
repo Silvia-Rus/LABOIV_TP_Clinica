@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { StorageService } from 'src/app/servicios/storage.service';
+
 import { Router } from '@angular/router';
 // import { Usuario } from 'src/app/clases/usuarios';
 
@@ -14,15 +16,15 @@ export class LoginComponent implements OnInit {
   loginUsuario: FormGroup;
   user: string = '';
 
-  constructor(private auth: AuthService,
-              private fb:FormBuilder,
-              ) { 
-                this.loginUsuario = this.fb.group({ 
-                  email:['', Validators.required],
-                  password:['', Validators.required],
-                  })
-                }
-  ngOnInit() {
+  constructor(private auth: AuthService, private fb:FormBuilder, private st:StorageService){ 
+      this.loginUsuario = this.fb.group({ 
+        email:['', Validators.required],
+        password:['', Validators.required],
+        })
+    }
+
+ngOnInit() {
+ 
   }
 
   login () {
@@ -37,19 +39,6 @@ export class LoginComponent implements OnInit {
     this.login();
   }
 
-  accesoDirecto(): void{
-    this.loginUsuario.value.email = this.user;
-    this.loginUsuario.value.password  = '123456';
-  }
 
-  accesoAdmin(): void {
-    this.loginUsuario.value.email = 'admin@clinica.com';
-    this.loginUsuario.value.password  = '123456';
-  }
-
-  accesoEmpleado(): void {
-    this.loginUsuario.value.email = 'empleado@clinica.com';
-    this.loginUsuario.value.password  = '123456';
-  }
 
 }

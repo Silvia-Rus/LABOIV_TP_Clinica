@@ -12,25 +12,20 @@ export class AccesoDirectoComponent implements OnInit {
 
   @Output() user = new EventEmitter<string>();
   constructor(public storage: StorageService) { }
+  public users = ['kiben40787@anwarb.com',  //pac 1
+                  'bewig40097@aramask.com', //pac 2
+                  'yajabi1842@byorby.com',  //pac 3
+                  'dewaboc287@byorby.com',  //esp 1
+                  'caviji6942@aramask.com', //esp 2
+                  'jeyax11606@byorby.com'   //admin
+                 ]
 
   ngOnInit() {
-    this.getFoto('silrusma@gmail.com');
-    this.getFoto('silviarus.biblio@gmail.com');
+    this.storage.getImagenes(this.users);
   }
 
   logUser(user: string)
   {
     this.user.emit(user);    
   }
-
-  // getSpecialtyAll(): Observable<Specialty[]> {
-  //   const userRef = collection(this.firestore, 'specialty');
-  //   return collectionData(userRef, { idField: 'id' }) as Observable<Specialty[]>;
-  // }
-
-  getFoto(user: string)
-  {
-    this.storage.getImages(user);
-  }
-
 }

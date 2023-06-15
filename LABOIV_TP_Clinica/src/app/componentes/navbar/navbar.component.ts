@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-
+import { Usuario } from 'src/app/clases/usuario';
 
 
 @Component({
@@ -12,10 +12,17 @@ import { StorageService } from 'src/app/servicios/storage.service';
 export class NavbarComponent implements OnInit {
 
   logueado = this.auth.getAuth();
-  
-  constructor(private auth: AuthService) { }
+  // rol = '';
 
+  constructor(private auth: AuthService, public st: StorageService) { }
   ngOnInit() {
+    this.st.usuarioObj = new Usuario('', '', '', '', '', '', '', '', '');
+    this.auth.getAuth().subscribe(res => {
+      if(res != null)
+      {
+        this.st.getUser(res?.email);
+      }
+      })
   }
 
   logout() {
