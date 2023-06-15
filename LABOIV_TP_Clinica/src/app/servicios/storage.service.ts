@@ -5,6 +5,8 @@ import { serverTimestamp } from 'firebase/firestore'
 import { AlertService } from './alert.service';
 import { Usuario } from 'src/app/clases/usuario';
 import { ref, Storage, uploadBytes, listAll, getDownloadURL } from '@angular/fire/storage';
+import { AuthService } from './auth.service';
+
 
 
 @Injectable({
@@ -18,10 +20,14 @@ export class StorageService {
 
   constructor(private db: AngularFirestore,
               private alerta: AlertService,
-              public st: Storage
+              public st: Storage,
+              // public auth: AuthService
               ) { }
 
-  public async addUsuario(usuario: Usuario) {
+  public async addUsuario(usuario: Usuario, archivos: any) {
+      console.log("llega aquí al add");
+      var verificado;
+      usuario.rol == 'Especialista' ? verificado = 'false' : verificado = 'true';
       this.usuario = {
         nombre: usuario.nombre,
         apellido: usuario.apellido,
@@ -31,19 +37,19 @@ export class StorageService {
         password: usuario.password,
         obraSocial: usuario.obraSocial,
         especialidad: usuario.especialidad,
-        photoUrl: usuario.photoUrl,
-        imageUrl: usuario.imageUrl,
+        rol: usuario.rol,
+        verificado: verificado,
+        // photoUrl: usuario.photoUrl,
+        // imageUrl: usuario.imageUrl,
         creado: serverTimestamp(),
         log: serverTimestamp(),
-        activo: true 
     }
-    return await this.db.collection('usuarios').add(this.usuario),
+    console.log(this.usuario);
     this.db.collection(this.coleccion).add(this.usuario)
-    .then((user)=> {
-      // this.alerta.lanzarAlertaExito('¡Usuario grabado con éxito!')
-    }).catch((error) => {
-      this.alerta.lanzarAlertaError(error);        
-      });  
+              .then(() => {console.log("then")})
+              .catch((error) => {
+                this.alerta.lanzarAlertaError(error);        
+                }); 
   }
 
   async subirImagenes(usuario: string, archivos: any)
@@ -64,7 +70,7 @@ export class StorageService {
     const metadata = {
       contentType: 'image',
     };
-    await uploadBytes(imgRef, element, metadata)
+    await uploadBytes(imgRef, element)
       .then()
       .catch(error => console.log(error));
 
@@ -80,10 +86,16 @@ export class StorageService {
   }
 
   async getImages(user: string) {
+    console.log("llega al getimages");
+    console.log(user);
     this.listUrl = [];
-    const imagesRef = ref(this.st, 'images/' + user);
+    const storage = firebase.storage();
+    const imagesRef = storage.ref('images/' + user);
     await listAll(imagesRef).then(async res => {
+      console.log("entra al list");
+      console.log(res);
       for (let item of res.items) {
+        console.log("entra al FOR");
         await getDownloadURL(item).then(res => { this.listUrl.push(res); });
       }
     }).catch(error => console.log(error));
@@ -107,7 +119,6 @@ export class StorageService {
       .catch((error) => {
         console.log('Error grabando: ', error);
       });
-
   }
 
   getNombre(mail: any)

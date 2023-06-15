@@ -16,6 +16,7 @@ export class RegistroComponent implements OnInit {
   archivos: FileList[] = [];
   // archivos: any;
   form!: FormGroup;
+  rol: string = '';
 
   constructor(private readonly fb: FormBuilder,
               private db: AuthService,
@@ -28,7 +29,7 @@ export class RegistroComponent implements OnInit {
       rol: ['', [Validators.minLength(3), Validators.maxLength(20)]],
       nombre: ['', [Validators.minLength(3), Validators.maxLength(20)]],
       apellido: ['', [Validators.minLength(3), Validators.maxLength(20)]],
-      edad: ['', [Validators.max(100)]],
+      edad: ['', [Validators.required, Validators.max(100)]],
       dni: ['', [Validators.minLength(8), Validators.maxLength(8)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -47,12 +48,14 @@ export class RegistroComponent implements OnInit {
     this.ngOnInit();
   }
 
+  setRol(rol: string)
+  {
+    this.rol = rol;
+  }
+
  cargarImagen($event: any) {
-    // this.archivos = $event.target.files;
      const archivo = $event.target.files;
-     console.log(archivo);
      this.archivos.push(archivo);
-     console.log(this.archivos);
 }
 
 subirImagenes(usuario: string)
@@ -64,27 +67,20 @@ subirImagenes(usuario: string)
 }
 
 crearUsuario(){
-
-    console.log("archivos al grabar "+this.archivos);
-
-    const rol = this.form.value.rol;
-    const usuario = new Usuario(this.form.value.nombre,
-                                  this.form.value.apellido,
-                                  this.form.value.dni, 
-                                  this.form.value.edad,
-                                  this.form.value.email, 
-                                  this.form.value.password, 
-                                  this.form.value.rol,
-                                  this.form.value.obraSocial, 
-                                  this.form.value.especialidad);
-    //grabar en base
-    console.log(this.archivos);
-
-    // this.st.subirImagenes(usuario.email, this.archivos);
-    //this.st.subirImagen(usuario.email, this.archivos);
-    this.db.registro(usuario, this.archivos);
-    console.log(this.archivos);
+    // const rol = this.form.value.rol;
+    // const usuario = new Usuario(this.form.value.nombre,
+    //                               this.form.value.apellido,
+    //                               this.form.value.dni, 
+    //                               this.form.value.edad,
+    //                               this.form.value.email, 
+    //                               this.form.value.password, 
+    //                               this.rol,
+    //                               // this.form.value.rol,
+    //                               this.form.value.obraSocial, 
+    //                               this.form.value.especialidad);
+    // this.db.registro(usuario, this.archivos);
+    console.log(this.rol);
     //resetear
-    this.reset();
+    //this.reset();
   }
 }

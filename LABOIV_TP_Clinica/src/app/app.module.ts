@@ -22,6 +22,8 @@ import { provideAuth } from '@angular/fire/auth';
 import { getAuth } from 'firebase/auth';
 import { provideStorage } from '@angular/fire/storage';
 import { getStorage } from 'firebase/storage';
+import { LoginComponent } from './paginas/login/login.component';
+import { PreRegistroComponent } from './paginas/pre-registro/pre-registro.component';
 
 
 const firebaseConfig = {
@@ -40,6 +42,7 @@ const firebaseConfig = {
     NavbarComponent,
     HomeComponent,
     RegistroComponent,
+    PreRegistroComponent
   ],
   imports: [
     BrowserModule,

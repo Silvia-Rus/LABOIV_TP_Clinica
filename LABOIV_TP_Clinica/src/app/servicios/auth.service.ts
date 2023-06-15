@@ -9,8 +9,6 @@ import { ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { Usuario } from 'src/app/clases/usuario';
 import { getAuth, sendEmailVerification, updateProfile } from 'firebase/auth';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,67 +25,55 @@ export class AuthService {
   {
     this.afauth.signInWithEmailAndPassword(email, password)
     .then((user)=> {
-      this.router.navigate(['/home']);
-      this.alerta.lanzarAlertaExito('¡Holi '+user.user?.email+'!');
-      // this.storage.grabarLog(email);
-      // console.log(this.storage.getNombre(email))
+        firebase.firestore().collection('usuarios').where('email', '==', email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if(doc.data()["verificado"] == 'true'){
+              if(user.user?.emailVerified == true){
+                this.alerta.lanzarAlertaExito("¡Bienvenido "+doc.data()["nombre"]+"!");
+                this.router.navigate(['/home']);
+              }
+              else{
+                this.alerta.lanzarAlertaError("Confirme primero su mail.");
+                this.logout("/login");
+              }
+            }
+            else{
+              this.alerta.lanzarAlertaError("Espere a que un admin apruebe su usuario.");
+              this.logout("/login");
+            }
+            console.log(doc.data());
+          });
+        })
+        .catch((error) => {
+          console.log('Error buscando: ', error);
+        });
     }).catch((error) => {
       this.alerta.lanzarAlertaError(this.error(error.code));        
       });
   }
 
- registro(usuario: Usuario, archivos: any)
+ async registro(usuario: Usuario, archivos: any)
   {
     console.log(archivos);
-    //this.st.subirImagenes(usuario.email, archivos);
     this.afauth.createUserWithEmailAndPassword(usuario.email, usuario.password)
-    .then((res) => {
-      // console.log(res);
-      // console.log(res.user);
-      // console.log(archivos)
-      //enviar mail de verificación
-      // res.user?.sendEmailVerification();
-      // .then(async () => {
-      //   // await this.st.getImages(usuario.email).then(() => {
-      //   //   this.updateUser(usuario.nombre, this.st.listUrl[0]);
-      //   //   //guardar
-      //   //   usuario.photoUrl = this.st.listUrl[0];
-      //   //   usuario.imageUrl = [...this.st.listUrl];
-      //   //   console.log(usuario.photoUrl);
-      //   //   this.st.addUsuario(usuario)
-      //   // })
-      //   console.log("acáaaaa");
-      // })
-      //alerta de esperar que llegue el mail de verificación
-      // this.st.addUsuario(usuario)
-      this.alerta.lanzarAlertaExito("Pronto recibirá un mail para confirmar su mail.")
-      //signout
-    }).catch((error) => {
-      this.alerta.lanzarAlertaError(this.error(error.code));        
-      });
-
-  
-
-      this.st.subirImagenes(usuario.email, archivos).then(async () => {
-        // await this.st.getImages(usuario.email).then(() => {
-        //   this.updateUser(usuario.nombre, this.st.listUrl[0]);
-        //   //guardar
-        //   usuario.photoUrl = this.st.listUrl[0];
-        //   usuario.imageUrl = [...this.st.listUrl];
-        //   console.log(usuario.photoUrl);
-        //   this.st.addUsuario(usuario)
-        // })
-        console.log("acáaaaa");
+      .then((res) => {
+        res.user?.sendEmailVerification();
+        console.log(archivos);
+        this.alerta.lanzarAlertaExito("Pronto recibirá un mail para confirmar su mail.")
+        this.st.subirImagenes(usuario.email, archivos);
+        this.st.addUsuario(usuario, archivos);
       })
-
+      .catch((error) => {
+        this.alerta.lanzarAlertaError(this.error(error.code));        
+      })
   }
-
   async updateUser(name: string, url: string) {
     let auth = getAuth();
     return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then().catch(
       (err) => console.log(err));
   }
-
   error(error:string)
   {
     switch(error){
@@ -105,11 +91,12 @@ export class AuthService {
     }
   }
 
-  async logout() {
+ logout(redireccion: string) {
     this.afauth.signOut()
     .then((user)=> {
-      this.alerta.lanzarAlertaExito('¡Chau!');
-      this.router.navigate(['/home']);
+      console.log("¡Adios!");
+      // this.alerta.lanzarAlertaExito('¡Chau!');
+      this.router.navigate([redireccion]);
     }).catch((error) => {
         this.alerta.lanzarAlertaError(':( '+this.error(error.code));        
       });
@@ -117,6 +104,14 @@ export class AuthService {
 
   getAuth() {
     return this.afauth.authState;
+  }
+
+  async printCurrentUser() {
+    this.getAuth().subscribe(res => {
+    //this.afauth.authState.subscribe(res => {
+      console.log(res);
+    })
+    
   }
 
   // currentUserEmail(){

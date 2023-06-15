@@ -1,14 +1,18 @@
 
 <br> <br> <br>
+<div  *ngIf="!rol; else then_content">
+<app-pre-registro (rol)="setRol($event)"></app-pre-registro>
+</div>
+<ng-template #then_content>
   <div class="container bg-light">
     <main>
       <div class="py-5 text-center">
-        <h2>Registro</h2>
+        <h2>Registro {{this.rol}}</h2>
       </div>
       <div class="row g-6">
         <form [formGroup]="form" (ngSubmit)="crearUsuario()" class="needs-validation" novalidate>
           <div class="row g-3">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <select 
                 formControlName="rol"
                 class="form-select w-100 btn btn-secondary btn-lg" 
@@ -20,7 +24,7 @@
               </select>
               <div class="invalid-feedback">
               </div>
-            </div>
+            </div> -->
             
             <div class="col-sm-6">
               <label for="firstName" class="form-label">Nombre</label>
@@ -32,10 +36,10 @@
                 placeholder="" 
                 value="" 
                 required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                    *ngIf="getValue('nombre')?.invalid && (getValue('nombre').touched || getValue('nombre').dirty)">
                 Introduzca un nombre válido.
-              </div>
+              </small>
             </div>
 
             <div class="col-sm-6">
@@ -48,10 +52,10 @@
                   placeholder="" 
                   value="" 
                   required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                 *ngIf="getValue('apellido')?.invalid && (getValue('apellido').touched || getValue('apellido').dirty)">
                 Introduzca un apellido válido.
-              </div>
+            </small>
             </div>
 
             <div class="col-6">
@@ -63,10 +67,10 @@
                 id="edad" 
                 placeholder=""
                 required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                     *ngIf="getValue('edad')?.invalid && (getValue('edad').touched || getValue('edad').dirty)">
                 Introduzca una edad válida.
-              </div>
+              </small>
             </div>
 
             <div class="col-6">
@@ -77,10 +81,10 @@
                 class="form-control" 
                 id="dni" 
                 required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                     *ngIf="getValue('dni')?.invalid && (getValue('dni').touched || getValue('dni').dirty)">
                 Introduzca un DNI válido.
-              </div>
+              </small>
             </div>
 
             <div class="col-12">
@@ -91,24 +95,24 @@
                 class="form-control" 
                 id="email"
                 required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                   *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
                   Introduzca un mail válido.
-              </div>
+            </small>
             </div>
 
             <div class="col-12">
               <label for="password" class="form-label">Contraseña</label>
               <input 
                   formControlName="password" 
-                  type="text" 
+                  type="password" 
                   class="form-control" 
                   id="password" 
                   required>
-              <div class="invalid-feedback"
+              <small class="errorMessage"
                 *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
                 Introduzca una contraseña.
-              </div>
+              </small>
             </div>
             <!-- solo para registrar médicos -->
             <div class="col-md-6" *ngIf="getValue('rol').value == 'Especialista'">
@@ -124,9 +128,6 @@
                   <option>Dermatología</option>
                   <option>Otra...</option>
               </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
             </div>
 
             <div class="col-6" *ngIf="getValue('rol').value == 'Especialista'">
@@ -147,10 +148,7 @@
                 type="text" 
                 class="form-control" 
                 id="obraSocial">
-              <div class="invalid-feedback">
-              </div>
             </div>
-
             <div class="col-12">
               <label for="imagenUno" class="form-label">Imagen</label>
               <input 
@@ -159,10 +157,7 @@
                 class="form-control" 
                 id="imagenUno"
                 (change)="cargarImagen($event)">
-              <div class="invalid-feedback">
-              </div>
             </div>
-
             <div class="col-12" *ngIf="getValue('rol').value == 'Paciente'">
               <label for="imagenDos" class="form-label">Imagen</label>
               <input 
@@ -181,5 +176,6 @@
       </div>
     </main>
   </div>
+</ng-template>
 
 
