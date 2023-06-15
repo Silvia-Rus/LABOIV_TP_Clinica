@@ -16,7 +16,8 @@ export class StorageService {
 
   usuario: any;
   coleccion: string = 'usuarios';
-  public listUrl: string[] = [];
+  public listaUrldelMismo: string[] = [];
+  public listaUrlParaVarios: string[] = [];
 
   constructor(private db: AngularFirestore,
               private alerta: AlertService,
@@ -88,15 +89,24 @@ export class StorageService {
   async getImages(user: string) {
     console.log("llega al getimages");
     console.log(user);
-    this.listUrl = [];
+    this.listaUrldelMismo = [];
     const storage = firebase.storage();
     const imagesRef = storage.ref('images/' + user);
     await listAll(imagesRef).then(async res => {
-      console.log("entra al list");
-      console.log(res);
+      //lista de primeras fotos de varios user
+      await getDownloadURL(res.items[0]).then(res => {
+        console.log(res) 
+        this.listaUrlParaVarios.push(res); 
+        });
+
+      //lista de fotos de un mismo user
       for (let item of res.items) {
-        console.log("entra al FOR");
-        await getDownloadURL(item).then(res => { this.listUrl.push(res); });
+        console.log(res.items);
+        console.log(item);
+        await getDownloadURL(item).then(res => {
+          console.log(res) 
+          this.listaUrldelMismo.push(res); 
+          });
       }
     }).catch(error => console.log(error));
   }

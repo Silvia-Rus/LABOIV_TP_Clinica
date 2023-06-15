@@ -1,5 +1,6 @@
 
   <body class="text-center">
+  <app-acceso-directo (user)="setUser($event)"></app-acceso-directo>
     <main class="form-signin"><br>
       <div class ="containerPrincipal">
       <div class="rounded container bg-light"> <br>
@@ -14,12 +15,12 @@
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password">
             <label for="floatingPassword">Contraseña</label>
           </div>
-          <button class="w-100 btn btn-lg btn-warning" type="submit">Entrar</button>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
           <p></p>
-          <div class="btn-group" role="group">
+          <!-- <div class="btn-group" role="group">
             <button type="button" class="btn btn-secondary" type="submit" (click)="accesoAdmin()">Admin</button>
             <button type="button" class="btn btn-secondary" type="submit" (click)="accesoEmpleado()">Empleado</button>
-          </div>
+          </div> -->
           <br>
           <br>
         </form>

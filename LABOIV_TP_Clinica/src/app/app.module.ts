@@ -42,7 +42,7 @@ const firebaseConfig = {
     NavbarComponent,
     HomeComponent,
     RegistroComponent,
-    PreRegistroComponent
+    PreRegistroComponent,
   ],
   imports: [
     BrowserModule,

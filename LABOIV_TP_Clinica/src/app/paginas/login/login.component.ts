@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginUsuario: FormGroup;
+  user: string = '';
 
   constructor(private auth: AuthService,
               private fb:FormBuilder,
@@ -28,6 +29,17 @@ export class LoginComponent implements OnInit {
     const email = this.loginUsuario.value.email;
     const password = this.loginUsuario.value.password; 
     this.auth.login(email, password);
+  }
+
+  setUser(user: string){
+    this.loginUsuario.value.email = user;
+    this.loginUsuario.value.password  = '123456';
+    this.login();
+  }
+
+  accesoDirecto(): void{
+    this.loginUsuario.value.email = this.user;
+    this.loginUsuario.value.password  = '123456';
   }
 
   accesoAdmin(): void {

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-pre-registro',
   templateUrl: './pre-registro.component.html',
