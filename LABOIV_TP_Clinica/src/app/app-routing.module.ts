@@ -6,7 +6,7 @@ import { HomeComponent } from './paginas/home/home.component';
 import { RegistroComponent } from './paginas/registro/registro.component';
 import { PreRegistroComponent } from './paginas/pre-registro/pre-registro.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
-
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,7 +14,7 @@ const routes: Routes = [
   // { path: 'login', component: LoginComponent },
   // { path: 'registro', component: PreRegistroComponent },
   { path: 'registro', component: RegistroComponent },
-  { path: 'usuarios', component: UsuariosComponent },
+  { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
 
 ];

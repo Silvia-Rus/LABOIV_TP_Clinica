@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public":  "dist/laboiv-tp-clinica",
     "ignore": [
       "firebase.json",
       "**/.*",

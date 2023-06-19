@@ -149,7 +149,7 @@ export class StorageService {
       });
   }
 
-  getUser(mail: any)
+  async getUser(mail: any)
   {
     this.usuarioObj = new Usuario('', '', '', '', '', '', '', '', []);
     firebase
@@ -159,7 +159,7 @@ export class StorageService {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        this.usuarioObj  = new Usuario(doc.data()["nombre"],
+       this.usuarioObj  = new Usuario(doc.data()["nombre"],
                                     doc.data()["apellido"],
                                     doc.data()["dni"],
                                     doc.data()["edad"],

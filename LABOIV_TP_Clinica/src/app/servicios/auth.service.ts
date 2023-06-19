@@ -33,6 +33,7 @@ export class AuthService {
               if(user.user?.emailVerified == true){
                 this.alerta.lanzarAlertaExito("¡Bienvenido "+doc.data()["nombre"]+"!");
                 this.router.navigate(['/home']);
+                this.st.getUser(email);
               }
               else{
                 this.alerta.lanzarAlertaError("Confirme primero su mail.");
@@ -96,6 +97,7 @@ export class AuthService {
       console.log("¡Adios!");
       // this.alerta.lanzarAlertaExito('¡Chau!');
       this.router.navigate([redireccion]);
+      this.st.usuarioObj = new Usuario('', '', '', '', '', '', '', '', []);
     }).catch((error) => {
         this.alerta.lanzarAlertaError(':( '+this.error(error.code));        
       });
