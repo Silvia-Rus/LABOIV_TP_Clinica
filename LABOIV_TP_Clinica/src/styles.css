@@ -2,7 +2,8 @@
 
 html,
 body {
-    background-size: auto;
+    background-size: cover;
     background-position: absolute;
-    background: url(assets/fondo.jpeg);
+    /* background-color: black; */
+    background: url(assets/__fondo.jpeg);
 }

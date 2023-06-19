@@ -12,16 +12,12 @@ import { Usuario } from 'src/app/clases/usuario';
 export class NavbarComponent implements OnInit {
 
   logueado = this.auth.getAuth();
-  // rol = '';
 
   constructor(private auth: AuthService, public st: StorageService) { }
   ngOnInit() {
-    this.st.usuarioObj = new Usuario('', '', '', '', '', '', '', '', '');
+    this.st.usuarioObj = new Usuario('', '', '', '', '', '', '', '', []);
     this.auth.getAuth().subscribe(res => {
-      if(res != null)
-      {
-        this.st.getUser(res?.email);
-      }
+      if(res != null){ this.st.getUser(res?.email); }
       })
   }
 

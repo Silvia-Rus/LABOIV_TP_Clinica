@@ -5,7 +5,7 @@ import { HomeComponent } from './paginas/home/home.component';
 // import { LoginComponent } from './paginas/login/login.component';
 import { RegistroComponent } from './paginas/registro/registro.component';
 import { PreRegistroComponent } from './paginas/pre-registro/pre-registro.component';
-
+import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
 
 
 const routes: Routes = [
@@ -14,6 +14,7 @@ const routes: Routes = [
   // { path: 'login', component: LoginComponent },
   // { path: 'registro', component: PreRegistroComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'usuarios', component: UsuariosComponent },
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
 
 ];

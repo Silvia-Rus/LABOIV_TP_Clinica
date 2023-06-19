@@ -1,0 +1,49 @@
+<main role="main">
+  <table class="table" style="width: 100%; align-self: center;">
+      <thead>
+          <tr>
+              <th>
+                Nombre
+              </th>
+              <th>
+                Apellido
+              </th>
+              <th>
+                Dni
+              </th>
+              <th>
+                Mail
+              </th>
+              <!-- <th>
+                Rol
+              </th> -->
+              <th *ngIf="verificado == 'false'">
+                Botón
+              </th>
+          </tr>
+      </thead>
+      <tbody *ngFor="let item of listaItems">
+          <tr *ngIf="item.rol == this.tipoUser && item.verificado == verificado">
+              <td >
+                  {{item.nombre}}
+              </td>
+              <td>
+                  {{item.apellido}}
+              </td>
+              <td>
+                  {{item.dni}}
+              </td>
+              <td>
+                  {{item.email}}
+              </td>
+              <!-- <td>
+                {{item.rol}}
+              </td> -->
+              <td *ngIf="item.verificado == 'false'">
+                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                      (click)="verificarUsuario(item.email);">Aprobar</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</main>

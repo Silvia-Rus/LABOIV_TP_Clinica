@@ -8,8 +8,7 @@ export class Usuario {
     password: any;
     rol: any;
     obraSocial: any;
-    especialidad: any;
-    // photoUrl: string;
+    especialidad: string[] = []    // photoUrl: string;
     // imageUrl: string[] = [];
 
 
@@ -21,7 +20,7 @@ export class Usuario {
                 password: any,
                 rol: any,
                 obraSocial = '',
-                especialidad  = '',
+                especialidad: string[] = [],
                 // photoUrl = '',
                 // imageUrl = []
                 ){

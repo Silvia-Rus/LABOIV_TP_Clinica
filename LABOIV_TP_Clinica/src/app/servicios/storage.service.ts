@@ -19,6 +19,7 @@ export class StorageService {
   public listaUrldelMismo: string[] = [];
   public listaUrlParaVarios: string[] = [];
   public usuarioObj: any;
+  public listaItems: [] = [];
 
   constructor(private db: AngularFirestore,
               private alerta: AlertService,
@@ -102,19 +103,44 @@ export class StorageService {
       })
     }
   }
-  ///VIEJAS
 
+  getCollection(coleccion: string) {
+    return this.db.collection(coleccion, ref => ref.orderBy('nombre', 'asc')).valueChanges();
+  }
+
+  aprobarUser(mail: string)
+  {
+    console.log(mail);
+    firebase
+      .firestore()
+      .collection(this.coleccion)
+      .where('email','==',mail)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            verificado: "true"
+          });
+        });
+      })
+      .catch((error) => {
+        console.log('Error grabando: ', error);
+      });
+  }
+
+  ///VIEJAS
   actualizarDato(mail: string, campo: any, nuevoDato: any)
   {
     firebase
       .firestore()
       .collection(this.coleccion)
-      .where('mail', '==',mail)
+      .where('email','==',mail)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          const campoAux = campo;
           doc.ref.update({
-            campo: nuevoDato
+            campoAux: nuevoDato
           });
         });
       })
@@ -125,7 +151,7 @@ export class StorageService {
 
   getUser(mail: any)
   {
-    this.usuarioObj = new Usuario('', '', '', '', '', '', '', '', '');
+    this.usuarioObj = new Usuario('', '', '', '', '', '', '', '', []);
     firebase
     .firestore()
     .collection(this.coleccion)
@@ -147,11 +173,6 @@ export class StorageService {
     .catch((error) => {
       console.log('Error grabando: ', error);
     });
-  }
-
-  getNombre(mail: any)
-  {
-    return this.db.collection(this.coleccion , ref => ref.where("mail", "==", mail)).snapshotChanges();
   }
 
   grabarLog(mail: string)
