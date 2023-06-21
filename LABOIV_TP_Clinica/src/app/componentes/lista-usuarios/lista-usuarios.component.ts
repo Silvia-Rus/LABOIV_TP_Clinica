@@ -14,7 +14,6 @@ export class ListaUsuariosComponent implements OnInit {
   @Input() tipoUser: any;
   @Input() verificado: any;
 
-
   ngOnInit() {
   }
 

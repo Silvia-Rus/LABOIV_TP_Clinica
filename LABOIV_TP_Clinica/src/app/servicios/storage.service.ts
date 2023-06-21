@@ -172,14 +172,9 @@ export class StorageService {
     }
   }
 
-  // getCollection(coleccion: string) {
-  //   return this.db.collection(coleccion, ref => ref.orderBy('nombre', 'asc')).valueChanges();
-  // }
-
   getCollection(coleccion: string, ordenadaPor: string) {
     return this.db.collection(coleccion, ref => ref.orderBy(ordenadaPor, 'asc')).valueChanges();
   }
-
 
   aprobarUser(mail: string)
   {
@@ -226,30 +221,30 @@ export class StorageService {
     });
   }
 
-  async getListaHorarios(mail: any)
-  {
-    var horario = new Horario('', '', '', '', '', '');
-    this.listaHorarios = [];
-    firebase
-    .firestore()
-    .collection('horarios')
-    .where('email', '==', mail)
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-       horario  = new Horario(doc.data()["nombre"],
-                              doc.data()["email"],
-                              doc.data()["clave"],
-                              doc.data()["diaSemana"],
-                              doc.data()["horaDesde"],
-                              doc.data()["horaHasta"]);
-        this.listaHorarios.push(horario);
-      });
-    })
-    .catch((error) => {
-      console.log('Error grabando: ', error);
-    });
-  }
+  // async getListaHorarios(mail: any)
+  // {
+  //   var horario = new Horario('', '', '', '', '', '');
+  //   this.listaHorarios = [];
+  //   firebase
+  //   .firestore()
+  //   .collection('horarios')
+  //   .where('email', '==', mail)
+  //   .get()
+  //   .then((querySnapshot) => {
+  //     querySnapshot.forEach((doc) => {
+  //      horario  = new Horario(doc.data()["nombre"],
+  //                             doc.data()["email"],
+  //                             doc.data()["clave"],
+  //                             doc.data()["diaSemana"],
+  //                             doc.data()["horaDesde"],
+  //                             doc.data()["horaHasta"]);
+  //       this.listaHorarios.push(horario);
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log('Error grabando: ', error);
+  //   });
+  // }
 
   
 

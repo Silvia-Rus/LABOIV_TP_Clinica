@@ -30,6 +30,9 @@ import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component';
+import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
+import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
 
 
 const firebaseConfig = {
@@ -52,6 +55,9 @@ const firebaseConfig = {
     ListaUsuariosComponent,
     UsuariosComponent,
     MiPerfilComponent,
+    SacarTurnoComponent,
+    ListaEspecialidadesComponent,
+    ListaEspecialistasComponent
   ],
   imports: [
     BrowserModule,

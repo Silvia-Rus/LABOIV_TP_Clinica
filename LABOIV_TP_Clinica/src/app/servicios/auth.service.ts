@@ -36,7 +36,7 @@ export class AuthService {
                 this.st.getUser(email);
                 this.st.getImages(email);
                 this.st.getImagenes(email);
-                this.st.getListaHorarios(email);
+                // this.st.getListaHorarios(email);
               }
               else{
                 this.alerta.lanzarAlertaError("Confirme primero su mail.");

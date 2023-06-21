@@ -12,12 +12,6 @@ import { AlertService } from 'src/app/servicios/alert.service';
 })
 export class MiPerfilComponent implements OnInit {
 
-  semana = ["Lunes",
-            "Martes",
-            "Miércoles",
-            "Jueves",
-            "Viernes",
-            "Sabado"]
   horaDesde = '';
   horaHasta = '';
   dia = '';
@@ -41,7 +35,7 @@ export class MiPerfilComponent implements OnInit {
   horaDesdeEsMenorAHoraHasta()
   {
     var retorno = null;
-    this.horaDesde < this.horaHasta ? retorno = true : retorno = false;
+    this.horaDesde == '' || this.horaHasta == '' && this.horaDesde < this.horaHasta  ? retorno = true : retorno = false;
     return retorno;
   }
   
@@ -64,7 +58,6 @@ export class MiPerfilComponent implements OnInit {
     {
       this.alerta.lanzarAlertaError("La hora desde que empieza el horario debe ser menor a la que termina");
     }
-  
   }
 
   traerListaActualizada() {
