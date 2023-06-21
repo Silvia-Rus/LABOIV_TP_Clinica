@@ -6,8 +6,7 @@ import { AlertService } from './alert.service';
 import { Usuario } from 'src/app/clases/usuario';
 import { ref, Storage, uploadBytes, listAll, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
-
-
+import { Horario } from 'src/app/clases/horario';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,13 @@ import { AuthService } from './auth.service';
 export class StorageService {
 
   usuario: any;
+  horario: any;
   coleccion: string = 'usuarios';
   public listaUrldelMismo: string[] = [];
   public listaUrlParaVarios: string[] = [];
   public usuarioObj: any;
   public listaItems: [] = [];
+  public listaHorarios: Horario[] = []
 
   constructor(private db: AngularFirestore,
               private alerta: AlertService,
@@ -28,7 +29,6 @@ export class StorageService {
               ) { }
 
   public async addUsuario(usuario: Usuario, archivos: any) {
-      console.log("llega aquí al add");
       var verificado;
       usuario.rol == 'Especialista' ? verificado = 'false' : verificado = 'true';
       this.usuario = {
@@ -49,17 +49,84 @@ export class StorageService {
     }
     console.log(this.usuario);
     this.db.collection(this.coleccion).add(this.usuario)
-              .then(() => {console.log("then")})
-              .catch((error) => {
+                .then(() => {console.log('Se graba el usuario: ', usuario); })
+                .catch((error) => {
                 this.alerta.lanzarAlertaError(error);        
                 }); 
+  }
+
+  public async addHorario(horario: Horario)
+  {
+    this.horario = {
+      nombre: horario.nombre,
+      email: horario.email,
+      clave: horario.clave,
+      diaSemana: horario.diaSemana,
+      horaHasta: horario.horaHasta,
+      horaDesde: horario.horaDesde,
+      creado: serverTimestamp(),
+      log: serverTimestamp(),
+    }
+
+    this.db.collection('horarios').add(this.horario)
+           .then(() => {console.log('Se graba el horario: ', horario.clave); })
+           .catch((error) =>  {console.log('Errror grabando el horario: ', error); });
+  }
+
+  public async addEspecialidad(especialidad: string)
+  {
+    firebase
+      .firestore()
+      .collection('especialidades')
+      .where('nombre','==',especialidad)
+      .get()
+      .then((querySnapshot) => {
+        if(querySnapshot.size == 0)
+        {
+          this.db.collection('especialidades').add({nombre: especialidad})
+          .then(() => {console.log('Se graba la especialidad: ', especialidad);   })
+          .catch((error) => {
+            console.log('Error grabando: ', error);        
+            }); 
+        }
+      })
+      .catch((error) => {
+        console.log('Error grabando: ', error);
+      });
+  }
+
+  public async addHorarioConValidacion(horario: Horario)
+  {
+    firebase
+      .firestore()
+      .collection('horarios')
+      .where('clave','==', horario.clave)
+      .get()
+      .then((querySnapshot) => {
+        if(querySnapshot.size == 0)
+        {
+          this.addHorario(horario);
+        }
+        else
+        {
+          querySnapshot.forEach((doc) => {
+            doc.ref.update({
+              horaHasta: horario.horaHasta,
+              horaDesde: horario.horaDesde,
+              log: serverTimestamp(),
+            }).then(() => {console.log("Se actualizó "+horario.clave)})
+          });
+        }
+      })
+      .catch((error) => {
+        console.log('Error grabando: ', error);
+      });
   }
 
   async subirImagenes(usuario: string, archivos: any)
   {
     console.log(archivos[0])
     console.log(archivos[1])
-
     for (let index = 0; index < archivos.length; index++){
       this.subirImagen(usuario, archivos[index]);
     }
@@ -78,7 +145,8 @@ export class StorageService {
       .catch(error => console.log(error));
   }
 
-  async getImages(user: string) {
+  async getImages(user: any) {
+    this.listaUrldelMismo = []; 
     const storage = firebase.storage();
     const imagesRef = storage.ref('images/' + user);
     await listAll(imagesRef).then(async res => {  
@@ -104,13 +172,17 @@ export class StorageService {
     }
   }
 
-  getCollection(coleccion: string) {
-    return this.db.collection(coleccion, ref => ref.orderBy('nombre', 'asc')).valueChanges();
+  // getCollection(coleccion: string) {
+  //   return this.db.collection(coleccion, ref => ref.orderBy('nombre', 'asc')).valueChanges();
+  // }
+
+  getCollection(coleccion: string, ordenadaPor: string) {
+    return this.db.collection(coleccion, ref => ref.orderBy(ordenadaPor, 'asc')).valueChanges();
   }
+
 
   aprobarUser(mail: string)
   {
-    console.log(mail);
     firebase
       .firestore()
       .collection(this.coleccion)
@@ -120,27 +192,6 @@ export class StorageService {
         querySnapshot.forEach((doc) => {
           doc.ref.update({
             verificado: "true"
-          });
-        });
-      })
-      .catch((error) => {
-        console.log('Error grabando: ', error);
-      });
-  }
-
-  ///VIEJAS
-  actualizarDato(mail: string, campo: any, nuevoDato: any)
-  {
-    firebase
-      .firestore()
-      .collection(this.coleccion)
-      .where('email','==',mail)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const campoAux = campo;
-          doc.ref.update({
-            campoAux: nuevoDato
           });
         });
       })
@@ -174,6 +225,56 @@ export class StorageService {
       console.log('Error grabando: ', error);
     });
   }
+
+  async getListaHorarios(mail: any)
+  {
+    var horario = new Horario('', '', '', '', '', '');
+    this.listaHorarios = [];
+    firebase
+    .firestore()
+    .collection('horarios')
+    .where('email', '==', mail)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+       horario  = new Horario(doc.data()["nombre"],
+                              doc.data()["email"],
+                              doc.data()["clave"],
+                              doc.data()["diaSemana"],
+                              doc.data()["horaDesde"],
+                              doc.data()["horaHasta"]);
+        this.listaHorarios.push(horario);
+      });
+    })
+    .catch((error) => {
+      console.log('Error grabando: ', error);
+    });
+  }
+
+  
+
+  ///VIEJAS
+  actualizarDato(mail: string, campo: any, nuevoDato: any)
+  {
+    firebase
+      .firestore()
+      .collection(this.coleccion)
+      .where('email','==',mail)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const campoAux = campo;
+          doc.ref.update({
+            campoAux: nuevoDato
+          });
+        });
+      })
+      .catch((error) => {
+        console.log('Error grabando: ', error);
+      });
+  }
+
+
 
   grabarLog(mail: string)
   {

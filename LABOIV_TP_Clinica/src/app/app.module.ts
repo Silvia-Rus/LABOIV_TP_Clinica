@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
-
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 //componentes
 import { NavbarComponent } from './componentes/navbar/navbar.component';
@@ -26,6 +26,10 @@ import { LoginComponent } from './paginas/login/login.component';
 import { PreRegistroComponent } from './paginas/pre-registro/pre-registro.component';
 import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
+import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const firebaseConfig = {
@@ -46,18 +50,22 @@ const firebaseConfig = {
     RegistroComponent,
     PreRegistroComponent,
     ListaUsuariosComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    MiPerfilComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, 
+    CommonModule,
     AngularFireStorageModule,
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideStorage(()=>getStorage())
+    provideStorage(()=>getStorage()),
+    BrowserAnimationsModule
     // AngularFireStorageModule, provideFirebaseApp(() => initializeApp(firebaseConfig)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
     // AngularFirestoreModule.enablePersistence(),
   ],

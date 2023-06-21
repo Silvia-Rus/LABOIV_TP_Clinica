@@ -18,7 +18,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   traerListaActualizada() {
-    this.st.getCollection('usuarios').subscribe(datos => this.listaItems = datos);
+    this.st.getCollection('usuarios', 'nombre').subscribe(datos => this.listaItems = datos);
   }
 
   asignarTipoUserVerificado(tipo: string)

@@ -20,7 +20,6 @@ export class ListaUsuariosComponent implements OnInit {
 
   verificarUsuario(usuario: any)
   {
-    console.log("llega?");
     this.st.aprobarUser(usuario);
   }
 

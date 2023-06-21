@@ -34,6 +34,9 @@ export class AuthService {
                 this.alerta.lanzarAlertaExito("¡Bienvenido "+doc.data()["nombre"]+"!");
                 this.router.navigate(['/home']);
                 this.st.getUser(email);
+                this.st.getImages(email);
+                this.st.getImagenes(email);
+                this.st.getListaHorarios(email);
               }
               else{
                 this.alerta.lanzarAlertaError("Confirme primero su mail.");

@@ -16,7 +16,7 @@ export class RegistroComponent implements OnInit {
   archivos: FileList[] = [];
   // archivos: any;
   form!: FormGroup;
-  rol: string = ''; 
+  rol: string = 'Especialista'; 
   especialidades: string[] = [];
 
   constructor(private readonly fb: FormBuilder,
@@ -80,11 +80,12 @@ export class RegistroComponent implements OnInit {
     if(this.form.value.gastroenterologia){this.especialidades.push("Gastroenterología");}
     if(this.form.value.ginecologia)      {this.especialidades.push('Ginecología');}
     if(this.form.value.clinica)          {this.especialidades.push('Clinica');}
-    if(this.form.value.especialidad)     {this.especialidades.push(this.form.value.especialidad)}
+    if(this.form.value.especialidad)     {this.especialidades.push(this.form.value.especialidad);
+                                          this.st.addEspecialidad(this.form.value.especialidad);}
   }
 
   crearUsuario(){
-    const rol = this.form.value.rol;
+    // const rol = this.form.value.rol;
     this.cargarEspecialidades();
     const usuario = new Usuario(this.form.value.nombre,
                                   this.form.value.apellido,
@@ -96,8 +97,7 @@ export class RegistroComponent implements OnInit {
                                   this.form.value.obraSocial, 
                                   this.especialidades);
     this.db.registro(usuario, this.archivos);
-    // console.log(this.rol);
-    
+    console.log(this.rol);
     //resetear
     //this.reset();
   }
