@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class SacarTurnoComponent implements OnInit {
 
   esp = '';
+  espta = '';
+  turno = '';
   constructor() { }
 
   ngOnInit() {
@@ -16,6 +18,16 @@ export class SacarTurnoComponent implements OnInit {
   setEsp(esp: string)
   {
     this.esp = esp;
+  }
+
+  setTurnos(turno: string)
+  {
+    this.turno = turno;
+  }
+
+  setEspta(espta: any)
+  {
+    this.espta = espta;
   }
 
 }

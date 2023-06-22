@@ -1,46 +1,40 @@
-<!-- <app-lista-especialidades></app-lista-especialidades> -->
 <br><br><br><br>
-<main>
-  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-        <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">Especialidades</h4>
-        </div>
-        <div class="card-body">
-          <app-lista-especialidades (esp)="setEsp($event)"></app-lista-especialidades>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-        <div *ngIf="this.esp == '' else then_content" class="card-header py-3">
-          <h4 class="my-0 fw-normal">Especialistas</h4>
-        </div>
-        <ng-template #then_content>
+<main>    
+  <div class="container py-3">
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">{{this.esp}}</h4>
+            <h4 class="my-0 fw-normal">Especialidades</h4>
           </div>
-        </ng-template>
-        <div class="card-body">
-            <app-lista-especialistas [especialidad]="this.esp"></app-lista-especialistas>
+          <div class="card-body">
+            <app-lista-especialidades (esp)="setEsp($event)"></app-lista-especialidades>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-        <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">Turnos</h4>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div *ngIf="this.esp == '' else then_content" class="card-header py-3">
+            <h4 class="my-0 fw-normal">Especialistas</h4>
+          </div>
+          <ng-template #then_content>
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">{{this.esp}}</h4>
+            </div>
+          </ng-template>
+          <div class="card-body">
+              <app-lista-especialistas [especialidad]="this.esp" (espta)="setEspta($event)"></app-lista-especialistas>
+          </div>
         </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">$29<small class="text-muted fw-light">/mo</small></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>30 users included</li>
-            <li>15 GB of storage</li>
-            <li>Phone and email support</li>
-            <li>Help center access</li>
-          </ul>
-          <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Turnos</h4>
+          </div>
+          <div class="card-body">
+            <app-lista-turnos [especialista]="this.espta"></app-lista-turnos>
+          </div>
         </div>
       </div>
     </div>

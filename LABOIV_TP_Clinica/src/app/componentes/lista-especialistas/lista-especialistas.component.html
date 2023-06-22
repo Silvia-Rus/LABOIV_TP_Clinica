@@ -1,24 +1,18 @@
 
 <main>
-  <!-- <div class="b-example-divider"></div> -->
-  <div class="d-flex flex-column flex-shrink-0 p-3 rounded" style="width: 200px;">
-      <ul class="nav nav-pills flex-column mb-auto">
-        <div *ngFor="let esp of this.listaItemsEspecialistas; index as i">
-          <!-- <div *ngIf="esp.rol == 'Especialista'"> -->
-            <div *ngFor="let espec of esp.especialidad">
-                <li *ngIf="espec == this.especialidad">
-                  <button (click)="this.enviarEspecialista(esp)" class="btn btn-outline-secondary" style="width: 180px;">
-                    <small>{{esp.nombre}} {{esp.apellido}}</small>
-                    <br>
-                    <img src="{{this.st.listaUrlParaVarios[i]}}" class="rounded" width="40" height="40" >
-                    <br>
-                    <!-- <small>{{esp.email}}</small> -->
-                  </button>
-                  <hr>
-                </li>
-            </div>
-          <!-- </div> -->
+  <ul class="nav nav-pills flex-column mb-auto">
+    <div *ngFor="let esp of this.listaEsptas; index as i">
+        <div *ngFor="let espec of esp.especialidad">
+            <li *ngIf="espec == this.especialidad">
+              <button (click)="this.test()" class="btn btn-outline-secondary" style="width: 180px;">
+                <small>{{esp.nombre}} {{esp.apellido}}</small>
+                <br>
+                <img src="{{this.st.listaUrlParaVarios[i]}}" class="rounded" width="40" height="40" >
+                <br>
+              </button>
+              <hr>
+            </li>
         </div>
-      </ul>
-  </div>
+    </div>
+  </ul>
 </main>

@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component';
 import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
 import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
+import { ListaTurnosComponent } from './componentes/lista-turnos/lista-turnos.component';
 
 
 const firebaseConfig = {
@@ -57,7 +58,8 @@ const firebaseConfig = {
     MiPerfilComponent,
     SacarTurnoComponent,
     ListaEspecialidadesComponent,
-    ListaEspecialistasComponent
+    ListaEspecialistasComponent,
+    ListaTurnosComponent
   ],
   imports: [
     BrowserModule,
