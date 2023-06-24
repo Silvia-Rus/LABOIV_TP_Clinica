@@ -74,7 +74,8 @@
                     <div *ngIf="horario.email == this.st.usuarioObj.email">
                       <p *ngIf="horario.horaDesde != '' || horario.horaHasta != '' " 
                           class="text-muted mb-0">
-                        {{horario.diaSemana | uppercase}} -- Desde: {{horario.horaDesde}} - Hasta: {{horario.horaHasta}}
+                          {{horario | horariosespta }}
+                          <!-- {{horario.diaSemana | uppercase}} -- Desde: {{horario.horaDesde}} - Hasta: {{horario.horaHasta}} -->
                       </p>
                   </div>
                 </div>

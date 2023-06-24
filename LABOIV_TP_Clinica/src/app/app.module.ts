@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 //componentes
 import { NavbarComponent } from './componentes/navbar/navbar.component';
@@ -34,6 +34,8 @@ import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component
 import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
 import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
 import { ListaTurnosComponent } from './componentes/lista-turnos/lista-turnos.component';
+import { HorariosEsptaPipe } from './pipes/horarios-espta.pipe';
+
 
 
 const firebaseConfig = {
@@ -59,7 +61,8 @@ const firebaseConfig = {
     SacarTurnoComponent,
     ListaEspecialidadesComponent,
     ListaEspecialistasComponent,
-    ListaTurnosComponent
+    ListaTurnosComponent,
+    HorariosEsptaPipe,
   ],
   imports: [
     BrowserModule,
@@ -73,11 +76,13 @@ const firebaseConfig = {
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideStorage(()=>getStorage()),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    UpperCasePipe
+
     // AngularFireStorageModule, provideFirebaseApp(() => initializeApp(firebaseConfig)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
     // AngularFirestoreModule.enablePersistence(),
   ],
-  providers: [StorageService],
+  providers: [StorageService, UpperCasePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
