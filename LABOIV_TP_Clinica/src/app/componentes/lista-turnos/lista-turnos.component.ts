@@ -18,22 +18,12 @@ export class ListaTurnosComponent implements OnInit {
   diasSemanaEsp: any[] = [];
   
   ngOnInit() {
-    this.traerHorarios();
   }
 
-  traerHorarios() {
-    this.st.getCollection('usuarios', 'nombre')
-            .subscribe((datos) => {
-              this.listaHorarios = datos;
-              for(let item of this.listaHorarios)
-              {
-                if(item.email = this.especialista)
-                {
-                  this.diasSemanaEsp.push(item.diaSemana);
-                }
-              }
-              console.log(this.diasSemanaEsp);
-            })
-  }
+  //la validación de si es admin o paciente
+
+  //grabarlo en la BD
+
+
 
 }

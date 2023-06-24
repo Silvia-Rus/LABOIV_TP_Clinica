@@ -13,9 +13,11 @@
       <p class="lead">
                       ¡Bienvenido!
       </p>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" (click)="quieroJugar()">Acceso</button>
+      <div *ngIf="logueado|async as user; else then_content" class="d-grid gap-2 d-md-flex justify-content-md-start">
       </div>
+      <ng-template #then_content>
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" (click)="acceso()">Acceso</button>
+      </ng-template>
     </div>
   </div>
 </div>

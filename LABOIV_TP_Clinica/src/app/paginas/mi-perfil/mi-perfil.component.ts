@@ -35,7 +35,10 @@ export class MiPerfilComponent implements OnInit {
   horaDesdeEsMenorAHoraHasta()
   {
     var retorno = null;
-    this.horaDesde == '' || this.horaHasta == '' && this.horaDesde < this.horaHasta  ? retorno = true : retorno = false;
+
+    //this.horaDesde == '' || this.horaHasta == '' && 
+    console.log(this.horaDesde < this.horaHasta );
+    this.horaDesde != '' && (this.horaDesde < this.horaHasta)  ? retorno = true : retorno = false;
     return retorno;
   }
   

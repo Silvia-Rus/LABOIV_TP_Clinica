@@ -16,7 +16,7 @@ export class RegistroComponent implements OnInit {
   archivos: FileList[] = [];
   // archivos: any;
   form!: FormGroup;
-  rol: string = 'Especialista'; 
+  rol: string = ''; 
   especialidades: string[] = [];
 
   constructor(private readonly fb: FormBuilder,

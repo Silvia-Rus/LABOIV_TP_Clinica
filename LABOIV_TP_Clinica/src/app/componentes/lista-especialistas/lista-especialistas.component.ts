@@ -2,10 +2,12 @@ import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Usuario } from 'src/app/clases/usuario';
+import { Dia } from 'src/app/clases/dia';
 import { reference } from '@popperjs/core';
 import { AnimateTimings } from '@angular/animations';
 import * as moment from 'moment';
-
+import 'moment/locale/es';
+import { Turno } from 'src/app/clases/turno';
 
 @Component({
   selector: 'app-lista-especialistas',
@@ -27,6 +29,7 @@ export class ListaEspecialistasComponent implements OnInit {
 
   //AUX
   listaHorariosEsp: any[] = [];
+  listaHoras: any[] = [];
 
   //ENVIAR
   listaTurnosEsp: any[] = [];
@@ -40,9 +43,8 @@ export class ListaEspecialistasComponent implements OnInit {
   ngOnInit() {
     this.traerListaUsuarios();
     this.traerListaHorarios();
-    this.traerListaTurnos();
-    this.dias();
-    console.log(this.listaHorarios);
+    // this.traerListaTurnos();
+    // this.test();
   }
 
   traerListaHorarios(){
@@ -92,39 +94,75 @@ export class ListaEspecialistasComponent implements OnInit {
 
   dias()
   {
-    // this.listaDias.push -- OBJETO DÍA?
+    for(let i = 0; i < 15; i++)
+    {
+      var maniana = moment().add(1, 'days');  //día de la semana en número
+      var diaAGrabar = maniana.add(i, 'days');
+      var diaObj = new Dia(diaAGrabar.format('dddd'), diaAGrabar.format('DD-MM-YYYY'));
+      this.listaDias.push(diaObj);
+    }
+  }
 
+  horas(horaDesde: any, horaHasta: any)
+  {
+      this.listaHoras = [];
+      var horaDesdeMom = moment(horaDesde, 'HH:mm');
+      var horaHastaMom = moment(horaHasta, 'HH:mm');
+      var horaAGrabar = horaDesdeMom;
+      this.listaHoras.push(horaDesdeMom.format('HH:mm'));
+
+      do
+      {
+        horaAGrabar = horaDesdeMom.add(30, 'minutes');
+        this.listaHoras.push(horaAGrabar.format('HH:mm')); 
+      }while(horaAGrabar < horaHastaMom);
   }
 
   horariosEspta(espta: string)
   {
     for(let h of this.listaHorarios)
     {
-      if(h.email == espta)
+      if(h.email == espta && h.horaDesde != '')
       {
         this.listaHorariosEsp.push(h);
       }
     }
   }
 
-  generadorTurnos(espta: string) //tiene que enviar un email
+  generadorTurnos(espta: any) //tiene que recibir todo el espta
   {
-    this.horariosEspta(espta);
+    this.dias(); //esto camina
+    this.horariosEspta(espta.email);
+    console.log(this.listaDias);
+    console.log(this.listaHorariosEsp); //miércoles de 15:00 a 18:00
     //rodar el array de horarios 
-    for(let h of this.listaHorariosEsp)
+    for(let h of this.listaHorariosEsp) //solo hay uno
     {
+      console.log('veces en listaHorarios esp debe ser solo 1');
       for(let d of this.listaDias)
       {
-        if(d == h.diaSemana)
+        if(d.diaSemana == h.diaSemana)
         {
-          //generar los turnos (objeto de una clase) de 30 en 30 (horaDesde - horaHasta)
-          //validación contra la lista turnos
+          console.log(d);
+          this.horas(h.horaDesde, h.horaHasta);
+
+          for(var hora of this.listaHoras)
+          {
+            //AQUÍ SE CREA EL OBJETO TURNO
+            var turno = new Turno(espta.nombre, espta.email, this.especialidad, d.fecha, hora);
+            //AQUÍ SE DEBE VALIDAR SI YA EXISTE
+            
+            //AQUÍ SE AÑADE A LA LISTA QUE SALE POR OUTPUT
+            this.listaTurnosEsp.push(turno);
+          }
         }
       }
     }
+    console.log(this.listaTurnosEsp);
   }
 
   test(){
-   console.log(this.listaHorarios);
+    
+  //  this.horas('9:30', '10:30'); //9:30 - 10:00
   }
 }
