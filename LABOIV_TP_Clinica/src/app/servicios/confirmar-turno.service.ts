@@ -57,10 +57,8 @@ async confirmarTurnoAdmin(turno: any, listaPacientes: any[]){
   });
   
   if (text) {
-    console.log(listaPacientes);
     for(let p of listaPacientes)
     {
-      console.log(p.dni);
       if(p.dni == text)
       {
         turno.turnoMasPaciente(turno, p.nombre, p.apellido, p.email);

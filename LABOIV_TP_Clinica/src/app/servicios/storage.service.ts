@@ -250,6 +250,28 @@ export class StorageService {
     });
   }
 
+  cancelarTurno(t: Turno, motivo: string){
+    firebase
+    .firestore()
+    .collection('turnos')
+    .where('clave','==', t.clave)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.update({
+          estado: 'cancelado',
+          motivo_cancel: motivo
+        }).then(()=>{
+          this.alerta.lanzarAlertaExito("Turno cancelado.");
+        });
+      });
+    })
+    .catch((error) => {
+      console.log('Error cancelando: ', error);
+    });
+
+  }
+
   ///VIEJAS
   actualizarDato(mail: string, campo: any, nuevoDato: any)
   {

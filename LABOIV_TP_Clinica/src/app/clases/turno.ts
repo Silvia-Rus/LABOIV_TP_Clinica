@@ -9,7 +9,8 @@ export class Turno{
     diaSemana: any;
     dia: any;
     hora: any;
-    
+    clave: any;
+
     constructor(esptaNombre: any, 
                 esptaApellido: any,
                 esptaEmail: any,

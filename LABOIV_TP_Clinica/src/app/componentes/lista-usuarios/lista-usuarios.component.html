@@ -14,9 +14,6 @@
               <th>
                 Mail
               </th>
-              <!-- <th>
-                Rol
-              </th> -->
               <th *ngIf="verificado == 'false'">
                 Botón
               </th>
@@ -36,9 +33,6 @@
               <td>
                   {{item.email}}
               </td>
-              <!-- <td>
-                {{item.rol}}
-              </td> -->
               <td *ngIf="item.verificado == 'false'">
                   <button type="button" class="btn btn-sm btn-outline-secondary"
                       (click)="verificarUsuario(item.email);">Aprobar</button>

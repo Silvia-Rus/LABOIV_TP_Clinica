@@ -2,8 +2,8 @@
 <main>    
   <div class="container py-3">
     <div class="card-header py-3 text-center rounded bg-light">
-      <h4 class="my-0 fw-normal">Sacar turno</h4>
-      <small class="my-0 fw-normal">Elija un turno de la lista</small>
+      <h4 class="my-0 fw-normal">Cancelar turno</h4>
+      <small class="my-0 fw-normal">Elija un turno de la lista para cancelar</small>
     </div>
     <br>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
@@ -13,7 +13,7 @@
             <h4 class="my-0 fw-normal">Especialidades</h4>
           </div>
           <div class="card-body">
-            <app-lista-especialidades (esp)="setEsp($event)"></app-lista-especialidades>
+            <app-lista-especialidades  (esp)="setEsp($event)"></app-lista-especialidades>
           </div>
         </div>
       </div>
@@ -28,7 +28,9 @@
             </div>
           </ng-template>
           <div class="card-body">
-              <app-lista-especialistas [especialidad]="this.esp" [accion]="'sacar'" (turnos)="setTurnos($event)"></app-lista-especialistas>
+              <app-lista-especialistas [especialidad]="this.esp" 
+                                       [accion]="'cancelar'"
+                                       (turnos)="setTurnos($event)"></app-lista-especialistas>
             </div>
         </div>
       </div>
@@ -38,7 +40,7 @@
             <h4 class="my-0 fw-normal">Turnos</h4>
           </div>
           <div class="card-body">
-            <app-lista-turnos [accion]="'sacar'" [turnos]="this.turno"></app-lista-turnos>
+            <app-lista-turnos [accion]="'cancelar'" [turnos]="this.turno"></app-lista-turnos>
           </div>
         </div>
       </div>

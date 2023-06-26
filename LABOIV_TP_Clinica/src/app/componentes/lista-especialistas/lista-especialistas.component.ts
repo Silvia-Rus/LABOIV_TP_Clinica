@@ -18,6 +18,7 @@ export class ListaEspecialistasComponent implements OnInit {
 
   @Output() turnos = new EventEmitter<any>();
   @Input() especialidad: any;
+  @Input() accion: any;
 
   //TRAER
   listaItems: any;
@@ -27,11 +28,12 @@ export class ListaEspecialistasComponent implements OnInit {
 
   //AUX
   listaHorariosEsp: any[] = [];
-  listaHoras: any[] = [];
+  listaHoras: any[] = [];      
 
   //ENVIAR
-  listaTurnosEsp: any[] = [];
-  listaTurnosActivos: any[] = []
+  listaTurnosLibresEsp: any[] = [];
+  listaTurnosActivosEsp: any[] = [];
+
 
   //MOSTRAR
   listaEsptas: any[] = [];
@@ -53,7 +55,7 @@ export class ListaEspecialistasComponent implements OnInit {
 
   traerListaTurnos(){
     this.st.getCollection('turnos', 'esptaEmail')
-            .subscribe(datos =>this.listaTurnos = datos)
+            .subscribe((datos) => {this.listaTurnos = datos;})
   }
 
   traerListaUsuarios() {
@@ -78,11 +80,30 @@ export class ListaEspecialistasComponent implements OnInit {
 
   enviarTurnos(espta: any) 
   {
-    this.generadorTurnos(espta);
-    this.validadorTurnos();
-    this.turnos.emit(this.listaTurnosEsp)
-    console.log(this.listaTurnosEsp);
+    switch(this.accion){
+      case "cancelar":
+        this.crearListaTurnosLibres(espta);
+        this.turnos.emit(this.listaTurnosActivosEsp)
+        break
+      case "sacar":
+        this.generadorTurnos(espta);
+        this.validadorTurnos();
+        this.turnos.emit(this.listaTurnosLibresEsp)
+        console.log(this.listaTurnosLibresEsp);
+        break
+    }
   }
+
+  crearListaTurnosLibres(espta: any){
+    for(let t of this.listaTurnos)
+    {
+      if(t.esptaEmail == espta.email && t.estado == 'nuevo')
+      {
+        this.listaTurnosActivosEsp.push(t);
+      }
+    }
+  }
+  
 
   dias()
   {
@@ -132,7 +153,7 @@ export class ListaEspecialistasComponent implements OnInit {
   generadorTurnos(espta: any) //tiene que recibir todo el espta
   {
     console.log(this.listaTurnos);
-    this.listaTurnosEsp = [];
+    this.listaTurnosLibresEsp = [];
     this.dias(); 
     this.horariosEspta(espta.email);
     for(let h of this.listaHorariosEsp) 
@@ -145,7 +166,7 @@ export class ListaEspecialistasComponent implements OnInit {
           for(var hora of this.listaHoras)
           {
             var turno = new Turno(espta.nombre, espta.apellido, espta.email, this.especialidad, d.diaSemana, d.fecha, hora);
-            this.listaTurnosEsp.push(turno);
+            this.listaTurnosLibresEsp.push(turno);
           }
         }
       }
@@ -154,16 +175,16 @@ export class ListaEspecialistasComponent implements OnInit {
 
     validadorTurnos()
     {      
-      for(let i = this.listaTurnosEsp.length - 1; i > -1 ; i--)
+      for(let i = this.listaTurnosLibresEsp.length - 1; i > -1 ; i--)
       {
         for(let l of this.listaTurnos)
         {
-          if(this.listaTurnosEsp[i].dia == l.dia && 
-             this.listaTurnosEsp[i].hora == l.hora &&
-             this.listaTurnosEsp[i].esptaEmail == l.esptaEmail &&
+          if(this.listaTurnosLibresEsp[i].dia == l.dia && 
+             this.listaTurnosLibresEsp[i].hora == l.hora &&
+             this.listaTurnosLibresEsp[i].esptaEmail == l.esptaEmail &&
              (l.estado == 'nuevo' || l.estado == 'aceptado'))
           {
-            this.listaTurnosEsp.splice(i, 1);
+            this.listaTurnosLibresEsp.splice(i, 1);
           }
         }
       }

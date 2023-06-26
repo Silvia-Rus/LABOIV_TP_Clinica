@@ -3,6 +3,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { ConfirmarTurnoService } from 'src/app/servicios/confirmar-turno.service';
 import { Turno } from 'src/app/clases/turno';
+import { CancelarTurnoService } from 'src/app/servicios/cancelar-turno.service';
 
 @Component({
   selector: 'app-lista-turnos',
@@ -13,13 +14,15 @@ export class ListaTurnosComponent implements OnInit {
 
   constructor(public auth: AuthService, 
               public st: StorageService, 
-              private ct: ConfirmarTurnoService) { }
+              private ct: ConfirmarTurnoService,
+              private cancT: CancelarTurnoService ) { }
   @Input() turnos: Turno[] = [];
+  @Input() accion: any;
+
 
   listaPacientes: any[] = [];
   listaItems: any;
 
-  
   ngOnInit() {
     this.traerListaPacientes();
   }
@@ -28,7 +31,6 @@ export class ListaTurnosComponent implements OnInit {
   {
     for(let i = this.turnos.length - 1; i > -1 ; i--)
       {
-        console.log(i);
         if(turno.dia == this.turnos[i].dia && 
            turno.hora == this.turnos[i].hora)
         {
@@ -53,17 +55,38 @@ export class ListaTurnosComponent implements OnInit {
   }
   abrirModal(turno: any)
   {
+    console.log(this.accion);
+    switch(this.accion)
+    {
+      case 'sacar':
+        this.sacarTurno(turno);
+        break
+      case 'cancelar':
+        this.cancelarTurno(turno);
+        break;      
+    }
+  }
+
+  sacarTurno(turno: any){
     var usuario = this.st.usuarioObj;
     if(usuario.rol == 'Paciente'){
       turno.turnoMasPaciente(turno, usuario.nombre, usuario.apellido, usuario.email);
-      this.ct.confirmarTurno(turno).then(()=>{
-      })
+      this.ct.confirmarTurno(turno)
+      .then((res)=>{console.log(res);})
     }
     else
     {
-      this.ct.confirmarTurnoAdmin(turno, this.listaPacientes);
+      this.ct.confirmarTurnoAdmin(turno, this.listaPacientes)
+      .then((res)=>{console.log(res);})
     }
     this.refrescarLista(turno);
+  }
+
+  cancelarTurno(turno: any){
+    this.cancT.cancelarTurno(turno)
+    .then((res)=>{
+      if(res){ this.refrescarLista(turno);}
+    });
   }
 
 }

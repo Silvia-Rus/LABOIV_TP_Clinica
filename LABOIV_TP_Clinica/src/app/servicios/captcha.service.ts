@@ -75,6 +75,8 @@ async captcha(): Promise<boolean> {
     showCancelButton: true,
     cancelButtonText: 'Cancelar',
     confirmButtonText: 'Confirmar',
+    cancelButtonColor: '#d33',
+    confirmButtonColor: '#198754',
     inputValidator: (value) => {
       if (!value || value !== captcha2) {
         return 'El código ingresado es incorrecto.';

@@ -13,26 +13,27 @@
           </li>
           <!-- ADMIN -->
             <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Admin'">
-              <a class="nav-link active" routerLink="#">Home</a>
-            </li>
-            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Admin'">
               <a class="nav-link active" routerLink="/usuarios">Usuarios</a>
             </li>
             <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Admin'">
-              <a class="nav-link active" routerLink="/registro">Registro</a>
+              <a class="nav-link active" routerLink="/cancelar-turno">Turnos</a>
             </li>
-         <!-- ESPECIALISTA -->
             <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Admin' || this.st.usuarioObj.rol == 'Paciente'">
               <a class="nav-link active" routerLink="/sacar-turno">Sacar turno</a>
             </li>
-         <!-- PACIENTE -->
-
+            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Especialista' || this.st.usuarioObj.rol == 'Paciente'">
+                <a class="nav-link active" routerLink="/sacar-turno">Mis turnos</a>
+            </li>
+            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Especialista'">
+              <a class="nav-link active" routerLink="/sacar-turno">Pacientes</a>
+            </li>
         </ul>
           <!-- Login - SignOut -->
           <div class="col-md-3 text-end">
           <div *ngIf="logueado|async as user; else then_content">
+            <button *ngIf="this.st.usuarioObj.rol == 'Admin'" type="button" class="btn btn-light me-2" routerLink="/registro">Registro</button>
             <button type="button" class="btn btn-outline-light me-2" (click)="logout()">{{this.st.usuarioObj.nombre}}
-              <img class="bi me-2" width="32" height="32" src="../assets/signOut.png" alt="" routerLink="/home">
+              <img class="bi me-2" width="22" height="22" src="../assets/signOut.png" alt="" routerLink="/home">
             </button>
           </div>
           <ng-template #then_content>

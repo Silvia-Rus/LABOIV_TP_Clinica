@@ -8,6 +8,7 @@ import { PreRegistroComponent } from './paginas/pre-registro/pre-registro.compon
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
 import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component';
+import { CancelarTurnoComponent } from './paginas/cancelar-turno/cancelar-turno.component';
 
 import { AdminGuard } from './guards/admin.guard';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'mi-perfil', component: MiPerfilComponent },
   { path: 'sacar-turno', component: SacarTurnoComponent },
+  { path: 'cancelar-turno', component: CancelarTurnoComponent },
   { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
 
