@@ -5,7 +5,6 @@
     <div *ngFor="let t of this.turnos; index as i">
         <li>
           <button (click)="this.pedirTurno(t)" class="btn btn-outline-secondary" style="width: 180px;">
-            <small>{{t.diaSemana | uppercase }}</small><br>
             <small>{{t | fechahoraturno }}</small>
           </button>
           <hr>

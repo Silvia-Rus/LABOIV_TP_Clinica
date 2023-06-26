@@ -26,8 +26,6 @@ export class ListaEspecialidadesComponent implements OnInit {
 
   enviarEspecialidad(esp: string)
   {
-    // <app-lista-especialidades (esp)="setEsp($event)"></app-lista-especialidades>
-
     this.esp.emit(esp);    
   }
 

@@ -78,7 +78,9 @@ export class ListaEspecialistasComponent implements OnInit {
   enviarTurnos(espta: any) 
   {
     this.generadorTurnos(espta);
+    this.validadorTurnos();
     this.turnos.emit(this.listaTurnosEsp)
+    console.log(this.listaTurnosEsp);
   }
 
   dias()
@@ -104,7 +106,6 @@ export class ListaEspecialistasComponent implements OnInit {
       do
       {
         horaAGrabar = horaDesdeMom.add(30, 'minutes');
-        //this.listaHoras.push(horaAGrabar.format('HH:mm')); 
         if(horaAGrabar >= horaHastaMom)
         {
           break
@@ -144,20 +145,33 @@ export class ListaEspecialistasComponent implements OnInit {
       {
         if(d.diaSemana == h.diaSemana)
         {
-     
           this.horas(h.horaDesde, h.horaHasta);
           for(var hora of this.listaHoras)
           {
-            //AQUÍ SE CREA EL OBJETO TURNO
             var turno = new Turno(espta.nombre, espta.apellido, espta.email, this.especialidad, d.diaSemana, d.fecha, hora);
-            //AQUÍ SE DEBE VALIDAR SI YA EXISTE
-
-            //AQUÍ SE AÑADE A LA LISTA QUE SALE POR OUTPUT
             this.listaTurnosEsp.push(turno);
           }
         }
       }
     }    
+    }
+
+    validadorTurnos()
+    {      
+      for(let i = this.listaTurnosEsp.length - 1; i > -1 ; i--)
+      {
+        console.log(i);
+        for(let l of this.listaTurnos)
+        {
+          if(this.listaTurnosEsp[i].dia == l.dia && 
+             this.listaTurnosEsp[i].hora == l.hora &&
+             this.listaTurnosEsp[i].esptaEmail == l.esptaEmail &&
+             (l.estado == 'nuevo' || l.estado == 'aceptado'))
+          {
+            this.listaTurnosEsp.splice(i, 1);
+          }
+        }
+      }
     }
 
 }

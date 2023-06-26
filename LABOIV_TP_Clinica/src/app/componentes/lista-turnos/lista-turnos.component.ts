@@ -15,7 +15,20 @@ export class ListaTurnosComponent implements OnInit {
   @Input() turnos: Turno[] = [];
   
   ngOnInit() {
-    
+  }
+
+  refrescarLista(turno: any)
+  {
+    for(let i = this.turnos.length - 1; i > -1 ; i--)
+      {
+        console.log(i);
+        if(turno.dia == this.turnos[i].dia && 
+           turno.hora == this.turnos[i].hora)
+        {
+          this.turnos.splice(i, 1);
+
+        }
+      }
   }
 
   pedirTurno(turno: Turno){
@@ -29,15 +42,12 @@ export class ListaTurnosComponent implements OnInit {
       
       turno.turnoMasPaciente(turno, usuario.nombre, usuario.apellido, usuario.email);
       this.st.addTurno(turno);
-    
+      this.refrescarLista(turno);
     }
     else
     {
       //lanzarModal
     }
-
-    console.log(this.turnos[0]);
-
   }
 
 }

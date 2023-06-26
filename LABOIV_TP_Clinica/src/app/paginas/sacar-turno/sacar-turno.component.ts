@@ -19,10 +19,7 @@ export class SacarTurnoComponent implements OnInit {
 
   setEsp(esp: string)
   {
-    console.log(esp);
     this.esp = esp;
-    console.log(this.esp);
-
   }
 
   setEspta(espta: any)
@@ -35,9 +32,7 @@ export class SacarTurnoComponent implements OnInit {
 
   setTurnos(turnos: any)
   {
-    console.log(turnos);
     this.turno = turnos;
-    console.log(this.turno);
   }
 
 }
