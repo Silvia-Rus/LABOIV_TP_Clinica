@@ -23,8 +23,8 @@
             </div>
           </ng-template>
           <div class="card-body">
-              <app-lista-especialistas [especialidad]="this.esp" (espta)="setEspta($event)"></app-lista-especialistas>
-          </div>
+              <app-lista-especialistas [especialidad]="this.esp" (turnos)="setTurnos($event)"></app-lista-especialistas>
+            </div>
         </div>
       </div>
       <div class="col">
@@ -33,7 +33,7 @@
             <h4 class="my-0 fw-normal">Turnos</h4>
           </div>
           <div class="card-body">
-            <app-lista-turnos [especialista]="this.espta"></app-lista-turnos>
+            <app-lista-turnos [turnos]="this.turno"></app-lista-turnos>
           </div>
         </div>
       </div>

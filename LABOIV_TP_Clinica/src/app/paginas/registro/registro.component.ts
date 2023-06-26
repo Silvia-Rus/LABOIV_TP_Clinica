@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { CaptchaService } from 'src/app/servicios/captcha.service';
+
 
 import { Usuario } from 'src/app/clases/usuario';
 
@@ -14,15 +16,14 @@ import { Usuario } from 'src/app/clases/usuario';
 export class RegistroComponent implements OnInit {
   
   archivos: FileList[] = [];
-  // archivos: any;
   form!: FormGroup;
   rol: string = ''; 
   especialidades: string[] = [];
 
   constructor(private readonly fb: FormBuilder,
               private db: AuthService,
-              private st: StorageService
-              // public storage: StorageService
+              private st: StorageService,
+              public c: CaptchaService
               ) { }
 
   ngOnInit() : void {
@@ -85,20 +86,20 @@ export class RegistroComponent implements OnInit {
   }
 
   crearUsuario(){
-    // const rol = this.form.value.rol;
-    this.cargarEspecialidades();
-    const usuario = new Usuario(this.form.value.nombre,
-                                  this.form.value.apellido,
-                                  this.form.value.dni, 
-                                  this.form.value.edad,
-                                  this.form.value.email, 
-                                  this.form.value.password, 
-                                  this.rol,
-                                  this.form.value.obraSocial, 
-                                  this.especialidades);
-    this.db.registro(usuario, this.archivos);
-    console.log(this.rol);
-    //resetear
-    //this.reset();
+    this.c.captcha().then(res=> {
+      if(res){
+        this.cargarEspecialidades();
+        const usuario = new Usuario(this.form.value.nombre,
+                                      this.form.value.apellido,
+                                      this.form.value.dni, 
+                                      this.form.value.edad,
+                                      this.form.value.email, 
+                                      this.form.value.password, 
+                                      this.rol,
+                                      this.form.value.obraSocial, 
+                                      this.especialidades);
+        this.db.registro(usuario, this.archivos);
+      }
+    })
   }
 }

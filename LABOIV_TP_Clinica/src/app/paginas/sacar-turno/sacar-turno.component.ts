@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Turno } from 'src/app/clases/turno';
+
 
 @Component({
   selector: 'app-sacar-turno',
@@ -9,7 +11,7 @@ export class SacarTurnoComponent implements OnInit {
 
   esp = '';
   espta = '';
-  turno = '';
+  turno: Turno[] = [];
   constructor() { }
 
   ngOnInit() {
@@ -17,17 +19,25 @@ export class SacarTurnoComponent implements OnInit {
 
   setEsp(esp: string)
   {
+    console.log(esp);
     this.esp = esp;
-  }
+    console.log(this.esp);
 
-  setTurnos(turno: string)
-  {
-    this.turno = turno;
   }
 
   setEspta(espta: any)
   {
+    console.log(espta);
     this.espta = espta;
+    console.log(this.espta);
+
+  }
+
+  setTurnos(turnos: any)
+  {
+    console.log(turnos);
+    this.turno = turnos;
+    console.log(this.turno);
   }
 
 }

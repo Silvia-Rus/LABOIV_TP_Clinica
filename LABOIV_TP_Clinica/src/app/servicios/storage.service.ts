@@ -7,6 +7,8 @@ import { Usuario } from 'src/app/clases/usuario';
 import { ref, Storage, uploadBytes, listAll, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
 import { Horario } from 'src/app/clases/horario';
+import { Turno } from 'src/app/clases/turno';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class StorageService {
 
   usuario: any;
   horario: any;
+  turno: any;
   coleccion: string = 'usuarios';
   public listaUrldelMismo: string[] = [];
   public listaUrlParaVarios: string[] = [];
@@ -93,6 +96,32 @@ export class StorageService {
       .catch((error) => {
         console.log('Error grabando: ', error);
       });
+  }
+
+  public async addTurno(turno: Turno){
+    var clave = turno.esptaEmail+'_'+turno.dia+'_'+turno.hora;
+    this.turno = {
+      esptaNombre: turno.esptaNombre,
+      esptaApellido: turno.esptaApellido,
+      esptaEmail: turno.esptaEmail,
+      pacNombre: turno.pacNombre,
+      pacApellido: turno.pacApellido,
+      pacEmail: turno.pacEmail,
+      especialidad: turno.especialidad,
+      diaSemana: turno.diaSemana,
+      dia: turno.dia,
+      hora: turno.hora,
+      clave: clave,
+      estado: 'nuevo',
+      resenia: '',
+      motivo_cancel: '',
+      motivo_rechazo: ''
+    }
+
+    this.db.collection('turnos').add(this.turno)
+           .then(() => {console.log('Se graba el turno: ', clave); })
+           .catch((error) =>  {console.log('Errror grabando el turno: ', error); });
+
   }
 
   public async addHorarioConValidacion(horario: Horario)
@@ -220,33 +249,6 @@ export class StorageService {
       console.log('Error grabando: ', error);
     });
   }
-
-  // async getListaHorarios(mail: any)
-  // {
-  //   var horario = new Horario('', '', '', '', '', '');
-  //   this.listaHorarios = [];
-  //   firebase
-  //   .firestore()
-  //   .collection('horarios')
-  //   .where('email', '==', mail)
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     querySnapshot.forEach((doc) => {
-  //      horario  = new Horario(doc.data()["nombre"],
-  //                             doc.data()["email"],
-  //                             doc.data()["clave"],
-  //                             doc.data()["diaSemana"],
-  //                             doc.data()["horaDesde"],
-  //                             doc.data()["horaHasta"]);
-  //       this.listaHorarios.push(horario);
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log('Error grabando: ', error);
-  //   });
-  // }
-
-  
 
   ///VIEJAS
   actualizarDato(mail: string, campo: any, nuevoDato: any)

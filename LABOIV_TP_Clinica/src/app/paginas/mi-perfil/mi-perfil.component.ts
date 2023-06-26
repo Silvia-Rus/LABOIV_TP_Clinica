@@ -3,8 +3,6 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Horario } from 'src/app/clases/horario';
 import { AlertService } from 'src/app/servicios/alert.service';
-// import { HorariosEsptaPipe } from 'src/app/pipes/horarios-espta.pipe';
-
 
 @Component({
   selector: 'app-mi-perfil',

@@ -1,6 +1,8 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { Turno } from 'src/app/clases/turno';
+
 
 @Component({
   selector: 'app-lista-turnos',
@@ -10,20 +12,32 @@ import { AuthService } from 'src/app/servicios/auth.service';
 export class ListaTurnosComponent implements OnInit {
 
   constructor(public auth: AuthService, public st: StorageService) { }
-  @Input() especialista: any;
-
-
-  listaHorarios: any;
-  listaEspecialistas: any;
-  diasSemanaEsp: any[] = [];
+  @Input() turnos: Turno[] = [];
   
   ngOnInit() {
+    
   }
 
-  //la validación de si es admin o paciente
+  pedirTurno(turno: Turno){
 
-  //grabarlo en la BD
+    var usuario = this.st.usuarioObj;
+    //nombre pacie
+    if(usuario.rol == "Paciente")
+    {
+      //lanzar modal ta seguro etc.
+      //Grabar
+      
+      turno.turnoMasPaciente(turno, usuario.nombre, usuario.apellido, usuario.email);
+      this.st.addTurno(turno);
+    
+    }
+    else
+    {
+      //lanzarModal
+    }
 
+    console.log(this.turnos[0]);
 
+  }
 
 }

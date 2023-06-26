@@ -1,18 +1,15 @@
 
 <main>
   <ul class="nav nav-pills flex-column mb-auto">
-    <small>{{this.especialista}}</small>
-
-    <div *ngFor="let dia of this.diasSemanaEsp; index as i">
-            <li>
-              <!-- <button (click)="this.enviarEspecialista(esp)" class="btn btn-outline-secondary" style="width: 180px;"> -->
-                <small>{{dia}}</small>
-                <!-- <br> -->
-                <!-- <img src="{{this.st.listaUrlParaVarios[i]}}" class="rounded" width="40" height="40" > -->
-                <!-- <br> -->
-              <!-- </button> -->
-              <hr>
-            </li>
-        </div>
+    <!-- <button (click)="this.test()" class="btn btn-outline-secondary" style="width: 180px;">test</button> -->
+    <div *ngFor="let t of this.turnos; index as i">
+        <li>
+          <button (click)="this.pedirTurno(t)" class="btn btn-outline-secondary" style="width: 180px;">
+            <small>{{t.diaSemana | uppercase }}</small><br>
+            <small>{{t | fechahoraturno }}</small>
+          </button>
+          <hr>
+        </li>
+    </div>
   </ul>
 </main>

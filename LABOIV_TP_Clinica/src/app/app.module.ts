@@ -35,8 +35,7 @@ import { ListaEspecialidadesComponent } from './componentes/lista-especialidades
 import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
 import { ListaTurnosComponent } from './componentes/lista-turnos/lista-turnos.component';
 import { HorariosEsptaPipe } from './pipes/horarios-espta.pipe';
-
-
+import { FechaHoraTurnoPipe } from './pipes/fechahora-turno.pipe';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAsMi9zxscXsbA_0befCml62yl9e8qoHlg",
@@ -63,6 +62,7 @@ const firebaseConfig = {
     ListaEspecialistasComponent,
     ListaTurnosComponent,
     HorariosEsptaPipe,
+    FechaHoraTurnoPipe
   ],
   imports: [
     BrowserModule,

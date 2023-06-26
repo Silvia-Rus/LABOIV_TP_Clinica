@@ -16,9 +16,7 @@ import { Turno } from 'src/app/clases/turno';
 })
 export class ListaEspecialistasComponent implements OnInit {
 
-  @Output() espta = new EventEmitter<string>();
-  @Output() turnos = new EventEmitter<any[]>();
-
+  @Output() turnos = new EventEmitter<any>();
   @Input() especialidad: any;
 
   //TRAER
@@ -43,8 +41,7 @@ export class ListaEspecialistasComponent implements OnInit {
   ngOnInit() {
     this.traerListaUsuarios();
     this.traerListaHorarios();
-    // this.traerListaTurnos();
-    // this.test();
+    this.traerListaTurnos();
   }
 
   traerListaHorarios(){
@@ -54,9 +51,8 @@ export class ListaEspecialistasComponent implements OnInit {
   }
 
   traerListaTurnos(){
-    this.st.getCollection('turnos', 'emailEspecialista')
-            .subscribe(datos =>this.listaHorarios = datos)
-
+    this.st.getCollection('turnos', 'esptaEmail')
+            .subscribe(datos =>this.listaTurnos = datos)
   }
 
   traerListaUsuarios() {
@@ -76,17 +72,10 @@ export class ListaEspecialistasComponent implements OnInit {
                    this.listaMailsEspecialistas.push(this.listaEsptas[i].email)
                 }
                 this.st.getImagenes(this.listaMailsEspecialistas);
-                // console.log(this.st.listaUrlParaVarios);
-                // console.log(this.listaItemsEspecialistas);
               })
   }
 
-  enviarEspecialista(espta: string)
-  {
-    this.espta.emit(espta);    
-  }
-
-  enviarTurnos(espta: string) //tiene que llegar un email
+  enviarTurnos(espta: any) 
   {
     this.generadorTurnos(espta);
     this.turnos.emit(this.listaTurnosEsp)
@@ -94,11 +83,12 @@ export class ListaEspecialistasComponent implements OnInit {
 
   dias()
   {
+    this.listaDias = [];
     for(let i = 0; i < 15; i++)
     {
       var maniana = moment().add(1, 'days');  //día de la semana en número
       var diaAGrabar = maniana.add(i, 'days');
-      var diaObj = new Dia(diaAGrabar.format('dddd'), diaAGrabar.format('DD-MM-YYYY'));
+      var diaObj = new Dia(diaAGrabar.format('dddd'), diaAGrabar.format('YYYY-MM-DD'));
       this.listaDias.push(diaObj);
     }
   }
@@ -114,12 +104,21 @@ export class ListaEspecialistasComponent implements OnInit {
       do
       {
         horaAGrabar = horaDesdeMom.add(30, 'minutes');
-        this.listaHoras.push(horaAGrabar.format('HH:mm')); 
+        //this.listaHoras.push(horaAGrabar.format('HH:mm')); 
+        if(horaAGrabar >= horaHastaMom)
+        {
+          break
+        }
+        else
+        {
+          this.listaHoras.push(horaAGrabar.format('HH:mm')); 
+        }
       }while(horaAGrabar < horaHastaMom);
   }
 
   horariosEspta(espta: string)
   {
+    this.listaHorariosEsp = [];
     for(let h of this.listaHorarios)
     {
       if(h.email == espta && h.horaDesde != '')
@@ -131,38 +130,34 @@ export class ListaEspecialistasComponent implements OnInit {
 
   generadorTurnos(espta: any) //tiene que recibir todo el espta
   {
-    this.dias(); //esto camina
+    console.log(this.listaTurnos);
+    this.listaTurnosEsp = [];
+    this.dias(); 
     this.horariosEspta(espta.email);
-    console.log(this.listaDias);
-    console.log(this.listaHorariosEsp); //miércoles de 15:00 a 18:00
+    // console.log(this.listaDias);
+    // console.log(this.listaHorariosEsp); //miércoles de 15:00 a 18:00
     //rodar el array de horarios 
     for(let h of this.listaHorariosEsp) //solo hay uno
     {
-      console.log('veces en listaHorarios esp debe ser solo 1');
+      // console.log('veces en listaHorarios esp debe ser solo 1');
       for(let d of this.listaDias)
       {
         if(d.diaSemana == h.diaSemana)
         {
-          console.log(d);
+     
           this.horas(h.horaDesde, h.horaHasta);
-
           for(var hora of this.listaHoras)
           {
             //AQUÍ SE CREA EL OBJETO TURNO
-            var turno = new Turno(espta.nombre, espta.email, this.especialidad, d.fecha, hora);
+            var turno = new Turno(espta.nombre, espta.apellido, espta.email, this.especialidad, d.diaSemana, d.fecha, hora);
             //AQUÍ SE DEBE VALIDAR SI YA EXISTE
-            
+
             //AQUÍ SE AÑADE A LA LISTA QUE SALE POR OUTPUT
             this.listaTurnosEsp.push(turno);
           }
         }
       }
+    }    
     }
-    console.log(this.listaTurnosEsp);
-  }
 
-  test(){
-    
-  //  this.horas('9:30', '10:30'); //9:30 - 10:00
-  }
 }
