@@ -4,7 +4,7 @@
     <!-- <button (click)="this.test()" class="btn btn-outline-secondary" style="width: 180px;">test</button> -->
     <div *ngFor="let t of this.turnos; index as i">
         <li>
-          <button (click)="this.pedirTurno(t)" class="btn btn-outline-secondary" style="width: 180px;">
+          <button  class="btn btn-outline-secondary" style="width: 180px;" data-bs-toggle="modal" data-bs-target="#confirmarTurno" (click)="abrirModal(t)">
             <small>{{t | fechahoraturno }}</small>
           </button>
           <hr>

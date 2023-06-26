@@ -22,14 +22,6 @@ export class SacarTurnoComponent implements OnInit {
     this.esp = esp;
   }
 
-  setEspta(espta: any)
-  {
-    console.log(espta);
-    this.espta = espta;
-    console.log(this.espta);
-
-  }
-
   setTurnos(turnos: any)
   {
     this.turno = turnos;

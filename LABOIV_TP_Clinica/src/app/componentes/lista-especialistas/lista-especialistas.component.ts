@@ -31,6 +31,7 @@ export class ListaEspecialistasComponent implements OnInit {
 
   //ENVIAR
   listaTurnosEsp: any[] = [];
+  listaTurnosActivos: any[] = []
 
   //MOSTRAR
   listaEsptas: any[] = [];
@@ -102,7 +103,6 @@ export class ListaEspecialistasComponent implements OnInit {
       var horaHastaMom = moment(horaHasta, 'HH:mm');
       var horaAGrabar = horaDesdeMom;
       this.listaHoras.push(horaDesdeMom.format('HH:mm'));
-
       do
       {
         horaAGrabar = horaDesdeMom.add(30, 'minutes');
@@ -135,12 +135,8 @@ export class ListaEspecialistasComponent implements OnInit {
     this.listaTurnosEsp = [];
     this.dias(); 
     this.horariosEspta(espta.email);
-    // console.log(this.listaDias);
-    // console.log(this.listaHorariosEsp); //miércoles de 15:00 a 18:00
-    //rodar el array de horarios 
-    for(let h of this.listaHorariosEsp) //solo hay uno
+    for(let h of this.listaHorariosEsp) 
     {
-      // console.log('veces en listaHorarios esp debe ser solo 1');
       for(let d of this.listaDias)
       {
         if(d.diaSemana == h.diaSemana)
@@ -160,7 +156,6 @@ export class ListaEspecialistasComponent implements OnInit {
     {      
       for(let i = this.listaTurnosEsp.length - 1; i > -1 ; i--)
       {
-        console.log(i);
         for(let l of this.listaTurnos)
         {
           if(this.listaTurnosEsp[i].dia == l.dia && 
