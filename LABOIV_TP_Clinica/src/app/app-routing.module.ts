@@ -11,6 +11,7 @@ import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component
 import { CancelarTurnoComponent } from './paginas/cancelar-turno/cancelar-turno.component';
 import { GestionTurnoEsptaComponent } from './paginas/gestion-turno-espta/gestion-turno-espta.component';
 import { GestionTurnoPacComponent } from './paginas/gestion-turno-pac/gestion-turno-pac.component';
+import { RegistroHistoriaComponent } from './paginas/registro-historia/registro-historia.component';
 
 import { AdminGuard } from './guards/admin.guard';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'registro-historia', component: RegistroHistoriaComponent },
   { path: 'mi-perfil', component: MiPerfilComponent },
   { path: 'sacar-turno', component: SacarTurnoComponent },
   { path: 'cancelar-turno', component: CancelarTurnoComponent },

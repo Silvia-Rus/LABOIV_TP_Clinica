@@ -41,6 +41,7 @@ import { NombreEsptaTurnoPipe } from './pipes/nombreEspta-turno.pipe';
 import { GestionTurnoEsptaComponent } from './paginas/gestion-turno-espta/gestion-turno-espta.component';
 import { TablaTurnosComponent } from './componentes/tabla-turnos/tabla-turnos.component';
 import { GestionTurnoPacComponent } from './paginas/gestion-turno-pac/gestion-turno-pac.component';
+import { RegistroHistoriaComponent } from './paginas/registro-historia/registro-historia.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAsMi9zxscXsbA_0befCml62yl9e8qoHlg",
@@ -73,7 +74,8 @@ const firebaseConfig = {
     GestionTurnoEsptaComponent,
     TablaTurnosComponent,
     ListaTurnosComponent,
-    GestionTurnoPacComponent
+    GestionTurnoPacComponent,
+    RegistroHistoriaComponent
 
   ],
   imports: [
