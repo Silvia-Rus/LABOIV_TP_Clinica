@@ -30,7 +30,7 @@ export class CancelarTurnoService {
     });
     
     if (text) {
-      this.st.cancelarTurno(turno, text);
+      this.st.cambiarEstadoTurno(turno,'cancelar', text);
       retorno = true;
     }
     else
@@ -39,6 +39,34 @@ export class CancelarTurnoService {
     }
     return retorno;
     }
+
+    async rechazarTurno(turno: any){
+      var retorno = false;
+      const { value: text } = await Swal.fire({
+        title: 'Rechazar Turno',
+        input: 'textarea',
+        inputLabel: 'Motivo de rechazo*',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#198754',
+        confirmButtonText: 'Rechazar Turno',
+        cancelButtonText: 'Volver',
+        inputPlaceholder: 'Introduzca el motivo del rechazo',
+        inputAttributes: {
+          'aria-label': 'Type your message here'
+        },
+        showCancelButton: true
+      });
+      
+      if (text) {
+        this.st.cambiarEstadoTurno(turno, 'rechazar', text);
+        retorno = true;
+      }
+      else
+      {
+        this.alert.lanzarAlertaError("El motivo es obligatorio. Turno no cancelado.")
+      }
+      return retorno;
+      }
 
   
 }

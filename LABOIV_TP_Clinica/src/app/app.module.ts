@@ -38,6 +38,8 @@ import { HorariosEsptaPipe } from './pipes/horarios-espta.pipe';
 import { FechaHoraTurnoPipe } from './pipes/fechahora-turno.pipe';
 import { CancelarTurnoComponent } from './paginas/cancelar-turno/cancelar-turno.component';
 import { NombreEsptaTurnoPipe } from './pipes/nombreEspta-turno.pipe';
+import { GestionTurnoEsptaComponent } from './paginas/gestion-turno-espta/gestion-turno-espta.component';
+import { TablaTurnosComponent } from './componentes/tabla-turnos/tabla-turnos.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAsMi9zxscXsbA_0befCml62yl9e8qoHlg",
@@ -66,7 +68,10 @@ const firebaseConfig = {
     HorariosEsptaPipe,
     FechaHoraTurnoPipe,
     CancelarTurnoComponent,
-    NombreEsptaTurnoPipe
+    NombreEsptaTurnoPipe,
+    GestionTurnoEsptaComponent,
+    TablaTurnosComponent,
+    ListaTurnosComponent
 
   ],
   imports: [

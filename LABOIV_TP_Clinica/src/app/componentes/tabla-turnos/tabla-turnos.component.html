@@ -1,0 +1,112 @@
+<main *ngIf="logueado|async as user" role="main">
+  <!-- <div *ngIf="logueado|async as user; else then_content"> -->
+
+  <h5>{{this.filtroEsp}}</h5>
+  <table class="table" style="width: 100%; align-self: center;">
+      <thead>
+          <tr>
+              <th>
+                Paciente
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Especialidad
+              </th>
+              <th>
+                Turno
+              </th>
+              <th>
+                Estado
+              </th>
+          
+              <th>
+                Botón
+              </th>
+          </tr>
+      </thead>
+      <tbody *ngFor="let item of listaItems">
+          <tr *ngIf="(this.filtroEsp != '' && item.especialidad == this.filtroEsp) 
+
+                     && 
+                     user.email == item.esptaEmail &&
+                     (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
+              <td >
+                <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
+              </td>
+              <td>
+                <small>{{item.pacEmail}}</small>
+              </td>
+              <td >
+                <small>{{item.especialidad}}</small>
+              </td>
+              <td>
+                <small> {{item | fechahoraturno }}</small>
+              </td>
+              <td>
+                <small> {{item.estado}}</small>
+              </td>
+              <td *ngIf="item.estado == 'nuevo'">
+                <div class="btn-group" role="group" aria-label="Basic example"> 
+                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('cancelar', item);">Cancelar</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('rechazar', item);">Rechazar</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('aceptar', item);">Aceptar</button>
+                </div>
+              </td> 
+              <td *ngIf="item.estado == 'aceptado'">
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('finalizar', item);">Finalizar</button>
+              </td> 
+              <td *ngIf="item.resenia != ''">
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('resenia', item);">Ver reseña</button>
+              </td> 
+          </tr>
+
+
+        <tr *ngIf="this.mailPac != '' &&
+            item.pacEmail == this.mailPac && 
+            user.email == item.esptaEmail &&
+            (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
+          <td >
+              <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
+          </td>
+          <td>
+            <small>{{item.pacEmail}}</small>
+          </td>
+          <td >
+            <small>{{item.especialidad}}</small>
+          </td>
+          <td>
+            <small> {{item | fechahoraturno }}</small>
+          </td>
+          <td>
+            <small> {{item.estado}}</small>
+          </td>
+          <td *ngIf="item.estado == 'nuevo'">
+            <div class="btn-group" role="group" aria-label="Basic example"> 
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+              (click)="accion('cancelar', item);">Cancelar</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+              (click)="accion('rechazar', item);">Rechazar</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+              (click)="accion('aceptar', item);">Aceptar</button>
+            </div>
+          </td> 
+          <td *ngIf="item.estado == 'aceptado'">
+            <button type="button" class="btn btn-sm btn-outline-secondary"
+              (click)="accion('finalizar', item);">Finalizar</button>
+          </td> 
+          <td *ngIf="item.resenia != ''">
+            <button type="button" class="btn btn-sm btn-outline-secondary"
+              (click)="accion('resenia', item);">Ver reseña</button>
+          </td> 
+        </tr>
+          
+      </tbody>
+  </table>
+</main>

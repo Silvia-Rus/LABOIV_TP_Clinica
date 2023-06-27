@@ -4,11 +4,15 @@
     <!-- <button (click)="this.test()" class="btn btn-outline-secondary" style="width: 180px;">test</button> -->
     <div *ngFor="let t of this.turnos; index as i">
         <li *ngIf="accion =='cancelar'">
-          <small>{{t.pacNombre}} {{t.pacApellido}}</small><br>
-          <small>{{t.pacEmail}}</small><br>
-          <small>{{t | nombreEsptaturno }}</small><br>
+          <button  class="btn btn-outline-secondary" (click)="abrirModal(t)">
+            <small>{{t.pacNombre}} {{t.pacApellido}}</small><br>
+            <small>{{t.pacEmail}}</small><br>
+            <small>{{t | nombreEsptaturno }}</small><br>
+            <small>{{t | fechahoraturno }}</small>
+          </button>
+          <hr>
         </li>
-        <li>
+        <li *ngIf="accion =='sacar'">
           <button  class="btn btn-outline-secondary" (click)="abrirModal(t)">
             <small>{{t | fechahoraturno }}</small>
           </button>

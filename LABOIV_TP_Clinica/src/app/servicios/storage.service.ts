@@ -250,21 +250,57 @@ export class StorageService {
     });
   }
 
-  cancelarTurno(t: Turno, motivo: string){
+  cambiarEstadoTurno(t: Turno, accion: string, motivo = ''){
     firebase
     .firestore()
     .collection('turnos')
     .where('clave','==', t.clave)
     .get()
     .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        doc.ref.update({
-          estado: 'cancelado',
-          motivo_cancel: motivo
-        }).then(()=>{
-          this.alerta.lanzarAlertaExito("Turno cancelado.");
+      if(accion == 'cancelar')
+      {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            estado: 'cancelado',
+            motivo_cancel: motivo
+          }).then(()=>{
+            this.alerta.lanzarAlertaExito("Turno cancelado.");
+          });
         });
-      });
+      }
+      else if(accion == 'rechazar')
+      {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            estado: 'rechazado',
+            motivo_rechazo: motivo
+          }).then(()=>{
+            this.alerta.lanzarAlertaExito("Turno rechazado.");
+          });
+        });
+      }
+      else if(accion == 'aceptar')
+      {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            estado: 'aceptado',
+          }).then(()=>{
+            this.alerta.lanzarAlertaExito("Turno aceptado.");
+          });
+        });
+      }
+      else if(accion == 'finalizar')
+      {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            estado: 'finalizado',
+            resenia: motivo,
+          }).then(()=>{
+            this.alerta.lanzarAlertaExito("Turno finalizado.");
+          });
+        });
+      }
+      
     })
     .catch((error) => {
       console.log('Error cancelando: ', error);
