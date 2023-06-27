@@ -1,9 +1,6 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { Usuario } from 'src/app/clases/usuario';
-import { Turno } from 'src/app/clases/turno';
-import firebase from 'firebase/compat/app';
 
 
 
@@ -15,7 +12,7 @@ import firebase from 'firebase/compat/app';
 })
 export class GestionTurnoEsptaComponent implements OnInit {
 
-  @Output() turnos = new EventEmitter<any>();
+  // @Output() turnos = new EventEmitter<any>();
 
   usuario:  any;
   listaUsuarios: any;

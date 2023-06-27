@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { CancelarTurnoService } from 'src/app/servicios/cancelar-turno.service';
 import { AceptarTurnoService } from 'src/app/servicios/aceptar-turno.service';
 import { FinalizarTurnoService } from 'src/app/servicios/finalizar-turno.service';
+import { AlertService } from 'src/app/servicios/alert.service';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class TablaTurnosComponent implements OnInit {
 
   @Input() listaItems: any;
   @Input() filtroEsp: any = '';
-  @Input() mailPac: any = '';
+  @Input() mail: any = '';
+  @Input() rol: any = '';
+
 
 
   logueado = this.auth.getAuth();
@@ -25,7 +28,8 @@ export class TablaTurnosComponent implements OnInit {
              public st: StorageService,
              private cancT: CancelarTurnoService,
              private acepT: AceptarTurnoService,
-             private finT: FinalizarTurnoService ) { }
+             private finT: FinalizarTurnoService,
+             private al: AlertService  ) { }
 
   ngOnInit() {
     console.log(this.listaItems);
@@ -54,6 +58,9 @@ export class TablaTurnosComponent implements OnInit {
         break;
       case 'resenia':
         this.finT.verResenia(turno);
+         break;
+      case 'encuesta':
+         this.al.lanzarAlertaExito('aquí irá la encuesta')
          break;
     }
 

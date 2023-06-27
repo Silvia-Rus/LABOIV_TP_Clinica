@@ -10,6 +10,7 @@ import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 import { SacarTurnoComponent } from './paginas/sacar-turno/sacar-turno.component';
 import { CancelarTurnoComponent } from './paginas/cancelar-turno/cancelar-turno.component';
 import { GestionTurnoEsptaComponent } from './paginas/gestion-turno-espta/gestion-turno-espta.component';
+import { GestionTurnoPacComponent } from './paginas/gestion-turno-pac/gestion-turno-pac.component';
 
 import { AdminGuard } from './guards/admin.guard';
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'sacar-turno', component: SacarTurnoComponent },
   { path: 'cancelar-turno', component: CancelarTurnoComponent },
   { path: 'gestion-turno-espta', component: GestionTurnoEsptaComponent },
+  { path: 'gestion-turno-pac', component: GestionTurnoPacComponent },
   { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
 

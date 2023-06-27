@@ -5,8 +5,11 @@
   <table class="table" style="width: 100%; align-self: center;">
       <thead>
           <tr>
-              <th>
+              <th *ngIf="this.rol == 'espta'" >
                 Paciente
+              </th>
+              <th *ngIf="this.rol == 'pac'" >
+                Doctor
               </th>
               <th>
                 Email
@@ -27,16 +30,28 @@
           </tr>
       </thead>
       <tbody *ngFor="let item of listaItems">
-          <tr *ngIf="(this.filtroEsp != '' && item.especialidad == this.filtroEsp) 
-
-                     && 
-                     user.email == item.esptaEmail &&
+          <tr *ngIf="((this.rol == 'espta' && 
+                    ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
+                     (this.mail!= '' && item.pacEmail == this.mail)) && 
+                     user.email == item.esptaEmail)
+                     ||
+                     (this.rol == 'pac' && 
+                     ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
+                     (this.mail != '' && item.esptaEmail == this.mail)) && 
+                     user.email == item.pacEmail))
+                     &&
                      (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
-              <td >
+              <td *ngIf="this.rol == 'espta'" >
                 <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
               </td>
-              <td>
+              <td *ngIf="this.rol == 'pac'" >
+                <small>{{item.esptaApellido}}, {{item.esptaNombre}}</small>
+              </td>
+              <td *ngIf="this.rol == 'espta'" >
                 <small>{{item.pacEmail}}</small>
+              </td>
+              <td *ngIf="this.rol == 'pac'" >
+                <small>{{item.esptaEmail}}</small>
               </td>
               <td >
                 <small>{{item.especialidad}}</small>
@@ -48,12 +63,12 @@
                 <small> {{item.estado}}</small>
               </td>
               <td *ngIf="item.estado == 'nuevo'">
-                <div class="btn-group" role="group" aria-label="Basic example"> 
+                <div class="btn-group" role="group"> 
                   <button type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="accion('cancelar', item);">Cancelar</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                  <button *ngIf="this.rol == 'espta'" type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="accion('rechazar', item);">Rechazar</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                  <button *ngIf="this.rol == 'espta'" class="btn btn-sm btn-outline-secondary"
                   (click)="accion('aceptar', item);">Aceptar</button>
                 </div>
               </td> 
@@ -62,51 +77,14 @@
                   (click)="accion('finalizar', item);">Finalizar</button>
               </td> 
               <td *ngIf="item.resenia != ''">
+                <div class="btn-group" role="group"> 
                 <button type="button" class="btn btn-sm btn-outline-secondary"
-                  (click)="accion('resenia', item);">Ver reseña</button>
+                  (click)="accion('resenia', item);">Reseña</button>
+                <button *ngIf="item.estado == 'finalizado'" type="button" class="btn btn-sm btn-outline-secondary"
+                  (click)="accion('encuesta', item);">Encuesta</button>
+                </div>
               </td> 
-          </tr>
-
-
-        <tr *ngIf="this.mailPac != '' &&
-            item.pacEmail == this.mailPac && 
-            user.email == item.esptaEmail &&
-            (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
-          <td >
-              <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
-          </td>
-          <td>
-            <small>{{item.pacEmail}}</small>
-          </td>
-          <td >
-            <small>{{item.especialidad}}</small>
-          </td>
-          <td>
-            <small> {{item | fechahoraturno }}</small>
-          </td>
-          <td>
-            <small> {{item.estado}}</small>
-          </td>
-          <td *ngIf="item.estado == 'nuevo'">
-            <div class="btn-group" role="group" aria-label="Basic example"> 
-              <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="accion('cancelar', item);">Cancelar</button>
-              <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="accion('rechazar', item);">Rechazar</button>
-              <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="accion('aceptar', item);">Aceptar</button>
-            </div>
-          </td> 
-          <td *ngIf="item.estado == 'aceptado'">
-            <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="accion('finalizar', item);">Finalizar</button>
-          </td> 
-          <td *ngIf="item.resenia != ''">
-            <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="accion('resenia', item);">Ver reseña</button>
-          </td> 
-        </tr>
-          
+          </tr>          
       </tbody>
   </table>
 </main>

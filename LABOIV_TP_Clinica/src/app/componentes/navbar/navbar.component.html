@@ -21,7 +21,10 @@
             <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Admin' || this.st.usuarioObj.rol == 'Paciente'">
               <a class="nav-link active" routerLink="/sacar-turno">Sacar turno</a>
             </li>
-            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Especialista' || this.st.usuarioObj.rol == 'Paciente'">
+            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Paciente'">
+              <a class="nav-link active" routerLink="/gestion-turno-pac">Mis turnos</a>
+            </li>
+            <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Especialista'">
                 <a class="nav-link active" routerLink="/gestion-turno-espta">Mis turnos</a>
             </li>
             <li  class="nav-item" *ngIf="this.st.usuarioObj.rol == 'Especialista'">
