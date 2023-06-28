@@ -15,6 +15,9 @@ export class MiPerfilComponent implements OnInit {
   horaHasta = '';
   dia = '';
   listaItems: any;
+  listaHistorias: any;
+  historia: any;
+  verHistoria = false;
   constructor(public st: StorageService, public auth: AuthService, public alerta: AlertService) { }
 
   ngOnInit() {  
@@ -22,6 +25,7 @@ export class MiPerfilComponent implements OnInit {
       if(res != null)
       { 
         this.st.getImages(res?.email);
+        this.traerHistorias(res?.email);
       }
       })
       this.traerListaActualizada();
@@ -34,8 +38,6 @@ export class MiPerfilComponent implements OnInit {
   horaDesdeEsMenorAHoraHasta()
   {
     var retorno = null;
-
-    //this.horaDesde == '' || this.horaHasta == '' && 
     console.log(this.horaDesde < this.horaHasta );
     this.horaDesde != '' && (this.horaDesde < this.horaHasta)  ? retorno = true : retorno = false;
     return retorno;
@@ -67,8 +69,33 @@ export class MiPerfilComponent implements OnInit {
             .subscribe(datos =>this.listaItems = datos)
   }
 
+  traerHistorias(email: any) {
+    this.st.getCollection('historias', 'pacEmail')
+            .subscribe((datos) =>{
+              this.listaHistorias = datos;
+              for(let h of this.listaHistorias){
+                if(h.pacEmail == email)
+                {
+                  this.historia = h;
+                }
+              }
+            })
+  }
+
   reset(){
     this.horaDesde = '';
     this.horaHasta = '';
+  }
+
+  setVerHistoria(valor: boolean)
+  {
+    if(this.historia != undefined)
+    {
+      this.verHistoria = valor;
+    }
+    else
+    {
+      this.alerta.lanzarAlertaError("No tiene historia todavía");
+    }
   }
 }

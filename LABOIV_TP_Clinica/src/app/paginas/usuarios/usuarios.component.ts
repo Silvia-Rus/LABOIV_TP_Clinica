@@ -11,6 +11,7 @@ export class UsuariosComponent implements OnInit {
   listaItems: any;
   tipoUser: string = '';
   verificado: string = '';
+  visualizacion = 'cards';
 
   constructor(private st: StorageService) { }
   ngOnInit() {
@@ -31,8 +32,12 @@ export class UsuariosComponent implements OnInit {
       default:
         this.tipoUser = tipo;
         this.verificado = 'true';
-    }
-    
+    } 
+  }
+
+  setVisualizacion(v: any)
+  {
+    this.visualizacion = v;
   }
 
 

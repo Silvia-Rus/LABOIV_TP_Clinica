@@ -9,6 +9,9 @@
             <img src="{{this.st.listaUrldelMismo[0]}}" 
               class="rounded-circle img-fluid" style="height: 197px;">
             <h5 class="my-3">{{this.st.usuarioObj.nombre}} {{this.st.usuarioObj.apellido}}</h5>
+            <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==false" (click)="setVerHistoria(true)" type="button" class="btn btn-primary btn-sm">Ver Historia</button>
+            <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==true" (click)="setVerHistoria(false)" type="button" class="btn btn-danger btn-sm">Ocultar Historia</button>
+
           </div> 
         </div>
       </div>
@@ -62,11 +65,15 @@
           </div>
         </div>
         <div class="row">
+          <div *ngIf="this.verHistoria == true">
+          <app-historia-clinica [historia]="historia" [origen]="'perfil'"></app-historia-clinica>
+         </div>
           <!-- TURNOS ESPECIALISTA -->
           <div *ngIf="this.st.usuarioObj.rol == 'Especialista'">
             <div class="col-md-12">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
+
              
                 <p class="mb-4"> HORARIOS </p>
                 <hr>
