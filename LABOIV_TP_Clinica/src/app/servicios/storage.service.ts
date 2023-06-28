@@ -8,6 +8,8 @@ import { ref, Storage, uploadBytes, listAll, getDownloadURL } from '@angular/fir
 import { AuthService } from './auth.service';
 import { Horario } from 'src/app/clases/horario';
 import { Turno } from 'src/app/clases/turno';
+import { Historia } from 'src/app/clases/historia';
+
 
 
 @Injectable({
@@ -17,6 +19,7 @@ export class StorageService {
 
   usuario: any;
   horario: any;
+  historia: any;
   turno: any;
   coleccion: string = 'usuarios';
   public listaUrldelMismo: string[] = [];
@@ -98,15 +101,70 @@ export class StorageService {
       });
   }
 
+  public async addHistoria(h: Historia){
+
+    this.historia = {
+      pacNombre: h.pacNombre,
+      pacApellido: h.pacApellido,
+      pacEmail: h.pacEmail,
+      pacDni: h.pacDni,
+      altura: h.altura,
+      peso: h.peso,
+      temperatura: h.temperatura,
+      presion: h.presion,
+      datoUnoClave: h.datoUnoClave,
+      datoUnoValor: h.datoUnoValor,
+      datoDosClave: h.datoDosClave,
+      datoDosValor: h.datoDosValor,
+      datoTresClave: h.datoTresClave,
+      datoTresValor: h.datoTresValor,
+    }
+
+    this.db.collection('historias').add(this.historia)
+      .then(() => {console.log('Se graba la historia de: ', h.pacDni); })
+      .catch((error) =>  {console.log('Error grabando la historia: ', error); });
+  }
+
+  public async modificarHistoria(h: Historia)
+  {
+    firebase
+      .firestore()
+      .collection('historias')
+      .where('pacEmail','==', h.pacEmail)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({ 
+            altura: h.altura,
+            peso: h.peso,
+            presion: h.presion,
+            temperatura: h.temperatura,
+            datoUnoClave: h.datoUnoClave,
+            datoUnoValor: h.datoUnoValor,
+            datoDosClave: h.datoDosClave,
+            datoDosValor: h.datoDosValor,
+            datoTresClave: h.datoTresClave,
+            datoTresValor: h.datoTresValor
+          }).then(() => {console.log("Se actualizó la historia "+h.pacEmail)})
+        });
+      })
+      .catch((error) => {
+        console.log('Error grabando: ', error);
+      });
+  }
+
   public async addTurno(turno: Turno){
+    // console.log(turno);
     var clave = turno.esptaEmail+'_'+turno.dia+'_'+turno.hora;
     this.turno = {
       esptaNombre: turno.esptaNombre,
       esptaApellido: turno.esptaApellido,
       esptaEmail: turno.esptaEmail,
+      esptaDni: turno.esptaDni,
       pacNombre: turno.pacNombre,
       pacApellido: turno.pacApellido,
       pacEmail: turno.pacEmail,
+      pacDni: turno.pacDni,
       especialidad: turno.especialidad,
       diaSemana: turno.diaSemana,
       dia: turno.dia,
@@ -151,6 +209,8 @@ export class StorageService {
         console.log('Error grabando: ', error);
       });
   }
+
+
 
   async subirImagenes(usuario: string, archivos: any)
   {

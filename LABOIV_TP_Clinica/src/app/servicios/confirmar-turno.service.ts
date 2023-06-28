@@ -61,7 +61,8 @@ async confirmarTurnoAdmin(turno: any, listaPacientes: any[]){
     {
       if(p.dni == text)
       {
-        turno.turnoMasPaciente(turno, p.nombre, p.apellido, p.email);
+        turno.turnoMasPaciente(turno, p.nombre, p.apellido, p.email, p.dni);
+        console.log(turno);
         this.confirmarTurno(turno);
         break
       }

@@ -12,7 +12,7 @@
                 Doctor
               </th>
               <th>
-                Email
+                DNI
               </th>
               <th>
                 Especialidad
@@ -32,12 +32,12 @@
       <tbody *ngFor="let item of listaItems">
           <tr *ngIf="((this.rol == 'espta' && 
                     ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
-                     (this.mail!= '' && item.pacEmail == this.mail)) && 
+                     (this.dni!= '' && item.pacDni == this.dni)) && 
                      user.email == item.esptaEmail)
                      ||
                      (this.rol == 'pac' && 
                      ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
-                     (this.mail != '' && item.esptaEmail == this.mail)) && 
+                     (this.dni != '' && item.esptaDni == this.dni)) && 
                      user.email == item.pacEmail))
                      &&
                      (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
@@ -48,10 +48,10 @@
                 <small>{{item.esptaApellido}}, {{item.esptaNombre}}</small>
               </td>
               <td *ngIf="this.rol == 'espta'" >
-                <small>{{item.pacEmail}}</small>
+                <small>{{item.pacDni}}</small>
               </td>
               <td *ngIf="this.rol == 'pac'" >
-                <small>{{item.esptaEmail}}</small>
+                <small>{{item.esptaDni}}</small>
               </td>
               <td >
                 <small>{{item.especialidad}}</small>
@@ -80,7 +80,7 @@
                 <div class="btn-group" role="group"> 
                 <button type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="accion('resenia', item);">Reseña</button>
-                <button *ngIf="item.estado == 'finalizado'" type="button" class="btn btn-sm btn-outline-secondary"
+                <button *ngIf="item.estado == 'finalizado' && this.rol=='Pac'" type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="accion('encuesta', item);">Encuesta</button>
                 </div>
               </td> 

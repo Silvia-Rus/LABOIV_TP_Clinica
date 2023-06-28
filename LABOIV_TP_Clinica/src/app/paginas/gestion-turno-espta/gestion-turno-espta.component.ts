@@ -1,9 +1,7 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-
-
-
+import { Turno } from 'src/app/clases/turno';
 
 @Component({
   selector: 'app-gestion-turno-espta',
@@ -12,14 +10,15 @@ import { StorageService } from 'src/app/servicios/storage.service';
 })
 export class GestionTurnoEsptaComponent implements OnInit {
 
-  // @Output() turnos = new EventEmitter<any>();
-
   usuario:  any;
   listaUsuarios: any;
   listaTurnos: any;
   filtroEsp: any;
   listaEspecialidades: any[] = [];
-  mailPac: any;
+  listaHistorias: any;
+  dniPac: any;
+  historia = false;
+  turno: any;
 
   constructor(private auth: AuthService, public st: StorageService) { }
 
@@ -38,6 +37,16 @@ export class GestionTurnoEsptaComponent implements OnInit {
       }
       });
       console.log(this.listaEspecialidades);
+      this.traerHistorias();
+  }
+
+  setHist(historia: boolean){
+    this.historia = historia;
+  }
+
+  setTurno(turno: Turno){
+    this.turno = turno;
+    // this.turno = this.listaTurnos[0];
   }
 
   traerEspecialidades(email: any)
@@ -67,16 +76,22 @@ export class GestionTurnoEsptaComponent implements OnInit {
             .subscribe((datos) => {this.listaTurnos = datos;})
   }
 
+  traerHistorias()
+  {
+    this.st.getCollection('historias', 'pacDni')
+            .subscribe((datos) => {this.listaHistorias = datos;})
+  }
+
   enviarFiltroEsp(esp: any)
   {
     this.filtroEsp = esp;
-    this.mailPac = '';
+    this.dniPac = '';
   }
 
-  enviarFiltroMail(mail: any)
+  enviarFiltroDni(dni: any)
   {
     this.filtroEsp = '';
-    this.mailPac = mail;
+    this.dniPac = dni;
   }
 
 }

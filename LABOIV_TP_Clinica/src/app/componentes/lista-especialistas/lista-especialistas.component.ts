@@ -165,7 +165,7 @@ export class ListaEspecialistasComponent implements OnInit {
           this.horas(h.horaDesde, h.horaHasta);
           for(var hora of this.listaHoras)
           {
-            var turno = new Turno(espta.nombre, espta.apellido, espta.email, this.especialidad, d.diaSemana, d.fecha, hora);
+            var turno = new Turno(espta.nombre, espta.apellido, espta.email, espta.dni, this.especialidad, d.diaSemana, d.fecha, hora);
             this.listaTurnosLibresEsp.push(turno);
           }
         }

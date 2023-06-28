@@ -20,7 +20,7 @@ export class FinalizarTurnoService {
       inputLabel: 'Añada una reseña',
       cancelButtonColor: '#d33',
       confirmButtonColor: '#198754',
-      confirmButtonText: 'Cancelar Turno',
+      confirmButtonText: 'Finalizar Turno',
       cancelButtonText: 'Volver',
       // inputPlaceholder: 'Introduzca el motivo de cancelación',
       inputAttributes: {
@@ -35,7 +35,7 @@ export class FinalizarTurnoService {
     }
     else
     {
-      this.alert.lanzarAlertaError("La reseña es obligatoria. Turno no finalizado.")
+      this.alert.lanzarAlertaError("El turno finalizó pero no grabó ninguna reseña.")
     }
     return retorno;
     }

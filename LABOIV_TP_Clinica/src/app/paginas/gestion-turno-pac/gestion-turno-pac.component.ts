@@ -12,7 +12,7 @@ export class GestionTurnoPacComponent implements OnInit {
   constructor(private auth: AuthService, public st: StorageService) { }
   listaEspecialidades: any[] = [];
   listaTurnos: any;
-  mailEsp: any;
+  dniEsp: any;
   filtroEsp: any;
 
 
@@ -66,17 +66,17 @@ export class GestionTurnoPacComponent implements OnInit {
             .subscribe((datos) => {this.listaTurnos = datos;})
   }
 
-  enviarFiltroMail(mail: any)
+  enviarFiltroDni(dni: any)
   {
     this.filtroEsp = '';
-    this.mailEsp = mail;
+    this.dniEsp = dni;
   }
 
   enviarFiltroEsp(esp: any)
   {
     console.log(this.listaTurnos);
     this.filtroEsp = esp;
-    this.mailEsp = '';
+    this.dniEsp = '';
   }
 
   

@@ -20,6 +20,8 @@ export class Horario{
             this.horaHasta = horaHasta;
         }
 
+   
+
 
 
 

@@ -70,7 +70,7 @@ export class ListaTurnosComponent implements OnInit {
   sacarTurno(turno: any){
     var usuario = this.st.usuarioObj;
     if(usuario.rol == 'Paciente'){
-      turno.turnoMasPaciente(turno, usuario.nombre, usuario.apellido, usuario.email);
+      turno.turnoMasPaciente(turno, usuario.nombre, usuario.apellido, usuario.email, usuario.dni);
       this.ct.confirmarTurno(turno)
       .then((res)=>{console.log(res);})
     }

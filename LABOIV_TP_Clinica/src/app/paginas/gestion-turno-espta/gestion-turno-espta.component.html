@@ -1,14 +1,11 @@
 
 <body> 
-  <div class="container py-3">
-      
+  <div *ngIf="historia == false; else then_content" class="container py-3">
     <div class="p-4 mb-4 bg-light rounded-3">
     <header>
       <br>
       <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-4 fw-normal">Turnos</h1>
-       
-        
         <p class="fs-5 text-muted">Filtrar por</p>
           <div class="btn-group" role="group">
             <div *ngFor="let esp of listaEspecialidades">
@@ -21,22 +18,29 @@
           <div class="d-flex justify-content-center">
             <div class="input-group input-group-sm mb-3" style="width: 50%;">
               <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button" (click)="enviarFiltroMail(dia.value)">Buscar paciente</button>
+                <button class="btn btn-outline-secondary" type="button" (click)="enviarFiltroDni(dni.value)">Buscar paciente</button>
               </div>
-              <input #dia type="text" class="form-control small" placeholder="Mail del paciente" aria-label="" aria-describedby="basic-addon1">
+              <input #dni type="text" class="form-control small" placeholder="DNI del paciente" aria-label="" aria-describedby="basic-addon1">
             </div>
           </div>
 
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
           <app-tabla-turnos [listaItems]="listaTurnos"
                              [filtroEsp]="filtroEsp"
-                             [mail]="mailPac"
-                             [rol]="'espta'">
+                             [dni]="dniPac"
+                             [rol]="'espta'"
+                             (historia)="setHist($event)"
+                             (turno)="setTurno($event)">
           </app-tabla-turnos>
         </div>
       </div>
     </header>
   </div>
   </div> 
+  <ng-template #then_content>
+    <app-registro-historia  [turno]="turno"
+                            [listaHistorias]="listaHistorias" 
+                            (historia)="setHist($event)"></app-registro-historia>
+  </ng-template>
 </body>
 

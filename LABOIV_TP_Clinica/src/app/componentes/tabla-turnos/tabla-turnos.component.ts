@@ -17,10 +17,10 @@ export class TablaTurnosComponent implements OnInit {
 
   @Input() listaItems: any;
   @Input() filtroEsp: any = '';
-  @Input() mail: any = '';
+  @Input() dni: any = '';
   @Input() rol: any = '';
-
-
+  @Output() historia = new EventEmitter<boolean>();
+  @Output() turno = new EventEmitter<Turno>();
 
   logueado = this.auth.getAuth();
 
@@ -51,7 +51,9 @@ export class TablaTurnosComponent implements OnInit {
         });
         break;
       case 'finalizar':
-        this.finT.finalizarTurno(turno);
+        this.historia.emit(true);
+        this.turno.emit(turno);
+        // this.finT.finalizarTurno(turno);
         break;
       case 'aceptar':
         this.acepT.aceptarTurno(turno);

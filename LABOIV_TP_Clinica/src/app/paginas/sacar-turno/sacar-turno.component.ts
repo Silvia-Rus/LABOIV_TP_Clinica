@@ -20,6 +20,7 @@ export class SacarTurnoComponent implements OnInit {
   setEsp(esp: string)
   {
     this.esp = esp;
+    this.turno = [];
   }
 
   setTurnos(turnos: any)
