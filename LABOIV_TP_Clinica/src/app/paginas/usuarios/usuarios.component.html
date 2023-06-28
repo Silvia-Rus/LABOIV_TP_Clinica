@@ -26,7 +26,8 @@
           <div *ngIf="this.visualizacion == 'cards'" class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <app-cards-usuarios [listaItems]="listaItems"
                                 [tipoUser]="tipoUser"
-                                [verificado]="verificado">
+                                [verificado]="verificado"
+                                [origen]="'admin'">
             </app-cards-usuarios>
           </div>
         </div>

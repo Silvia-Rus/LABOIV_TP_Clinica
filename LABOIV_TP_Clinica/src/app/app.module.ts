@@ -44,6 +44,7 @@ import { GestionTurnoPacComponent } from './paginas/gestion-turno-pac/gestion-tu
 import { RegistroHistoriaComponent } from './paginas/registro-historia/registro-historia.component';
 import { HistoriaClinicaComponent } from './componentes/historia-clinica/historia-clinica.component';
 import { CardsUsuariosComponent } from './componentes/cards-usuarios/cards-usuarios.component';
+import { PacientesComponent } from './paginas/pacientes/pacientes.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAsMi9zxscXsbA_0befCml62yl9e8qoHlg",
@@ -79,7 +80,8 @@ const firebaseConfig = {
     GestionTurnoPacComponent,
     RegistroHistoriaComponent,
     HistoriaClinicaComponent,
-    CardsUsuariosComponent
+    CardsUsuariosComponent,
+    PacientesComponent
   ],
   imports: [
     BrowserModule,

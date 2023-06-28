@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AlertService } from 'src/app/servicios/alert.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-cards-usuarios',
@@ -14,6 +16,11 @@ export class CardsUsuariosComponent implements OnInit {
   @Input() listaItems: any;
   @Input() tipoUser: any;
   @Input() verificado: any;
+  @Input() listaTurnos: any;
+  @Input() origen: any; //admin //espta
+
+
+
   historia: any; //esto es lo que hay que enviar al componente
   verHistoria = false;
   listaHistorias: any;
@@ -47,6 +54,26 @@ export class CardsUsuariosComponent implements OnInit {
                 this.alerta.lanzarAlertaError("El paciente no tiene historia cargada");
               }
             })
+  }
+
+  getTurnosPorUser(email: any)
+  {
+    console.log(this.listaTurnos);
+    let ord = this.listaTurnos.sort((b: any, a: any) => +moment(a.dia +a.hora,'YYYY-MM-DD HH:mm').format('YYYYMMDDHHmm') -  +moment(b.dia +b.hora,'YYYY-MM-DD HH:mm').format('YYYYMMDDHHmm'))
+    let listaTurnosPac = [];
+    for(let t of ord)
+    {
+      if(listaTurnosPac.length < 3)
+      {
+        if(t.pacEmail == email && t.estado == 'finalizado')
+        {
+          listaTurnosPac.push(t);
+        }
+      }
+
+    }
+    console.log(listaTurnosPac[0].dia);
+    this.alerta.lanzarMensajeTurnos(listaTurnosPac);
   }
 
 

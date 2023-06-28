@@ -19,6 +19,28 @@ constructor() {
    })
  }
 
+ lanzarMensajeTurnos(to: any)
+ {
+   let html = '<br><b>'+to[0].pacNombre+' '+to[0].pacApellido+'</b><br>';
+   for(let i = 0 ; i < to.length; i++)
+   {
+    console.log("entra?");
+    let cadena = '<br>'+to[i].dia+' '+to[i].hora+'<br>';
+    console.log(cadena);
+    html = html.concat(cadena);
+   }
+
+   console.log(html)
+
+   Swal.fire({
+     title: 'Últimos turnos',
+     text: to[0].pacNombre+to[0].pacApellido,
+     html: html,
+     showConfirmButton: true,
+     confirmButtonColor: '#198754',
+   })
+ }
+
  lanzarAlertaExito(texto: String)
  {
   this.lanzarAlerta('success', texto);

@@ -12,6 +12,12 @@
               <small> {{item.email}}</small>
               <br>{{item.dni}}
               <br>
+              <!-- <div *ngFor="let t of this.listaTurnos; index as i">
+                <div *ngIf="i < 4 && t.pacEmail == item.email && t.estado == 'finalizado'">
+                  <small> {{t | fechahoraturno }}</small>
+                </div>
+              </div> -->
+              <button *ngIf="tipoUser=='Paciente'" (click)="this.getTurnosPorUser(item.email)"   type="button" class="w-100 btn btn-sm btn-outline-secondary">Ver últimos turnos</button>
               <br>
               <button *ngIf="tipoUser=='Paciente'" (click)="this.traerHistorias(item.email)"   type="button" class="w-100 btn btn-sm btn-outline-secondary">Ver historial</button>
               <button *ngIf="item.verificado =='false'" type="button" class="w-100 btn btn-sm btn-outline-primary">Aprobar</button>
