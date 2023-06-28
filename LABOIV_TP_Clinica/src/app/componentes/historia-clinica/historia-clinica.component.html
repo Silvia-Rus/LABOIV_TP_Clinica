@@ -1,7 +1,10 @@
 <div class="card mb-4"> 
   <div class="card-body">
     <h3 class="mb-4"> Historia clínica </h3>
-
+    <div *ngIf="this.origen=='admin'">
+      <h5 class="mb-4"> {{historia.pacNombre}} {{historia.pacApellido}} </h5>
+      <h6 class="mb-4"> {{historia.pacDni}}</h6>
+    </div>
     <div class="row">
       <div class="col-sm-3">
         <p class="mb-0">Peso</p>
@@ -67,6 +70,5 @@
       </div>
       <hr>
     </div>
-    <!-- RODAR LOS OTROS DATOS -->
   </div>
 </div>

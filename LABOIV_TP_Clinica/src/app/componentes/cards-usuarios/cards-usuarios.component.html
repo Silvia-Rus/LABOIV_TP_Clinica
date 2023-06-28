@@ -1,0 +1,29 @@
+<div *ngIf="this.verHistoria == false">
+<p>{{this.tipoUser}}</p>
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    <div *ngFor="let item of listaItems">
+      <div  *ngIf="item.rol == this.tipoUser && item.verificado == verificado">
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <p class="my-0 fw-normal">{{item.nombre}} {{item.apellido}}</p>
+            </div>
+            <div class="card-body">
+              <small> {{item.email}}</small>
+              <br>{{item.dni}}
+              <br>
+              <br>
+              <button *ngIf="tipoUser=='Paciente'" (click)="this.traerHistorias(item.email)"   type="button" class="w-100 btn btn-sm btn-outline-secondary">Ver historial</button>
+              <button *ngIf="item.verificado =='false'" type="button" class="w-100 btn btn-sm btn-outline-primary">Aprobar</button>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </div>
+</div>
+</div>
+
+<div *ngIf="this.verHistoria == true">
+  <app-historia-clinica [historia]="historia" [origen]="'admin'"></app-historia-clinica>
+  <button type="button" class="btn btn-danger btn-sm" (click)="this.setVerHistoria(false)">Volver</button>
+</div>

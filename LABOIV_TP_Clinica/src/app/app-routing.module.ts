@@ -23,7 +23,8 @@ const routes: Routes = [
   { path: 'cancelar-turno', component: CancelarTurnoComponent },
   { path: 'gestion-turno-espta', component: GestionTurnoEsptaComponent },
   { path: 'gestion-turno-pac', component: GestionTurnoPacComponent },
-  { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
+  // { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
+  { path: 'usuarios', component: UsuariosComponent},
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
 
 ];

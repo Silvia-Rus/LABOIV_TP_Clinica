@@ -7,22 +7,28 @@
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
           <h1 class="display-4 fw-normal">Usuarios</h1>
           <p class="fs-5 text-muted">Listado</p>
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)="asignarTipoUserVerificado('Admin')">Admin</button>
-              <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)="asignarTipoUserVerificado('Paciente')">Paciente</button>
-            </div>
+              <button *ngIf="this.visualizacion =='cards'" type="button" class="btn btn-primary btn-sm" type="submit" (click)="setVisualizacion('lista')">Vista de Lista</button>
+              <button *ngIf="this.visualizacion =='lista'" type="button" class="btn btn-primary btn-sm" type="submit" (click)="setVisualizacion('cards')">Vista de Tarjetas</button>
+            <br>
+            <br>
             <div class="btn-group" role="group">
               <button type="button" class="btn btn-secondary" type="submit" (click)="asignarTipoUserVerificado('Admin')">Admin</button>
               <button type="button" class="btn btn-secondary" type="submit" (click)="asignarTipoUserVerificado('Paciente')">Paciente</button>
               <button type="button" class="btn btn-secondary" type="submit" (click)="asignarTipoUserVerificado('Especialista')">Especialista <i class="bi bi-shield-check"></i></button>
               <button type="button" class="btn btn-secondary" type="submit" (click)="asignarTipoUserVerificado('EspecialistaNV')">Especialista <i class="bi bi-shield-fill-x"></i></button>
             </div>
-          <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+          <div *ngIf="this.visualizacion == 'lista'" class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <app-lista-usuarios [listaItems]="listaItems"
                                 [tipoUser]="tipoUser"
                                 [verificado]="verificado">
             </app-lista-usuarios>
-        </div>
+          </div>
+          <div *ngIf="this.visualizacion == 'cards'" class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <app-cards-usuarios [listaItems]="listaItems"
+                                [tipoUser]="tipoUser"
+                                [verificado]="verificado">
+            </app-cards-usuarios>
+          </div>
         </div>
       </header>
     </div>

@@ -15,7 +15,7 @@ export class UsuariosComponent implements OnInit {
 
   constructor(private st: StorageService) { }
   ngOnInit() {
-    this.traerListaActualizada();
+    this.traerListaActualizada(); 
   }
 
   traerListaActualizada() {
