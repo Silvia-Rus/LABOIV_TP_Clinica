@@ -9,9 +9,11 @@
             <img src="{{this.st.listaUrldelMismo[0]}}" 
               class="rounded-circle img-fluid" style="height: 197px;">
             <h5 class="my-3">{{this.st.usuarioObj.nombre}} {{this.st.usuarioObj.apellido}}</h5>
-            <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==false" (click)="setVerHistoria(true)" type="button" class="btn btn-primary btn-sm">Ver Historia</button>
-            <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==true" (click)="setVerHistoria(false)" type="button" class="btn btn-danger btn-sm">Ocultar Historia</button>
-
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==false" (click)="setVerHistoria(true)" type="button" class="btn btn-primary btn-sm">Ver Historia</button>
+              <button *ngIf="this.st.usuarioObj.rol == 'Paciente' && this.verHistoria==true" (click)="setVerHistoria(false)" type="button" class="btn btn-danger btn-sm">Ocultar Historia</button>
+              <button *ngIf="this.st.usuarioObj.rol == 'Paciente'" (click)="descargarHistoria()" type="button" class="btn btn-secondary btn-sm">Descargar Historia</button>
+            </div>
           </div> 
         </div>
       </div>
@@ -60,6 +62,19 @@
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{this.st.usuarioObj.rol}}</p>
+              </div>
+            </div>
+            <hr>
+            <div *ngIf="this.st.usuarioObj.rol == 'Paciente'" class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Exportar turnos:</p>
+              </div>
+              <div class="col-sm-9">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <div *ngFor="let esp of listaEspecialidades">
+                    <button (click)="descargarTurnos(esp)" type="button" class="btn btn-secondary btn-sm">{{esp}}</button>   
+                  </div>
+                </div>
               </div>
             </div>
           </div>

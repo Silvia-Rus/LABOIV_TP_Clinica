@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Horario } from 'src/app/clases/horario';
+import { ExportPDFService } from 'src/app/servicios/exportPDF.service';
+
 import { AlertService } from 'src/app/servicios/alert.service';
 
 @Component({
@@ -18,7 +20,13 @@ export class MiPerfilComponent implements OnInit {
   listaHistorias: any;
   historia: any;
   verHistoria = false;
-  constructor(public st: StorageService, public auth: AuthService, public alerta: AlertService) { }
+  listaEspecialidades: any[] = [];
+  listaTurnos: any;
+
+  constructor(public st: StorageService, 
+              public auth: AuthService, 
+              public alerta: AlertService,
+              public pdf: ExportPDFService) { }
 
   ngOnInit() {  
     this.auth.getAuth().subscribe(res => {
@@ -26,9 +34,11 @@ export class MiPerfilComponent implements OnInit {
       { 
         this.st.getImages(res?.email);
         this.traerHistorias(res?.email);
+        this.traerEspecialidades(res?.email);
       }
       })
       this.traerListaActualizada();
+      this.traerTurnos()
   }
 
   elegirDia(dia: any){
@@ -97,5 +107,59 @@ export class MiPerfilComponent implements OnInit {
     {
       this.alerta.lanzarAlertaError("No tiene historia todavía");
     }
+  }
+
+  descargarHistoria()
+  {
+    if(this.historia != undefined){
+      this.pdf.exportHistoria(this.historia);
+    }
+    else
+    {
+      this.alerta.lanzarAlertaError("No tiene historia todavía");
+    }
+  }
+
+  descargarTurnos(especialidad: string){
+    if(this.listaTurnos.length > 0){
+      this.pdf.exportTurnos(this.listaTurnos, especialidad);
+    }
+    else
+    {
+      this.alerta.lanzarAlertaError("No tiene turnos.");
+    }
+  }
+
+  traerEspecialidades(email: any)
+  {
+    this.listaEspecialidades= [];
+    console.log("llega aquí");
+    this.st.getCollection('turnos', 'dia')
+            .subscribe((datos) =>
+              {
+                this.listaTurnos = datos;
+                for(let t of this.listaTurnos)
+                {
+                  let duplicado = false;
+                  if(t.pacEmail == email)
+                  {
+                      for(let i of this.listaEspecialidades)
+                      {
+                        if(t.especialidad == i)
+                        {
+                          duplicado = true;
+                        }
+                      }
+                    if(duplicado){break};
+                    this.listaEspecialidades.push(t.especialidad);
+                  }
+                }
+              })
+  }
+
+  traerTurnos()
+  {
+    this.st.getCollection('turnos', 'dia')
+            .subscribe((datos) => {this.listaTurnos = datos;})
   }
 }
