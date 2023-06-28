@@ -3,7 +3,6 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { AlertService } from 'src/app/servicios/alert.service';
 import * as moment from 'moment';
 
-
 @Component({
   selector: 'app-cards-usuarios',
   templateUrl: './cards-usuarios.component.html',

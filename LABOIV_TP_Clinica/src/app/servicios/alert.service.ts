@@ -38,6 +38,12 @@ constructor() {
      html: html,
      showConfirmButton: true,
      confirmButtonColor: '#198754',
+     showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+      },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+      }
    })
  }
 
