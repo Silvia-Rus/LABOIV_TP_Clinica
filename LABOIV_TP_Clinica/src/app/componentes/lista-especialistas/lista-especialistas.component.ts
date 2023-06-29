@@ -80,6 +80,7 @@ export class ListaEspecialistasComponent implements OnInit {
 
   enviarTurnos(espta: any) 
   {
+    console.log(this.listaEsptas);
     switch(this.accion){
       case "cancelar":
         this.crearListaTurnosLibres(espta);

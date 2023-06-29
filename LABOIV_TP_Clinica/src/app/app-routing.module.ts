@@ -15,6 +15,7 @@ import { PacientesComponent } from './paginas/pacientes/pacientes.component';
 import { HomeEsperaComponent } from './paginas/home-espera/home-espera.component';
 
 import { AdminGuard } from './guards/admin.guard';
+import { InformesComponent } from './paginas/informes/informes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,8 +27,9 @@ const routes: Routes = [
   { path: 'cancelar-turno', component: CancelarTurnoComponent },
   { path: 'gestion-turno-espta', component: GestionTurnoEsptaComponent },
   { path: 'gestion-turno-pac', component: GestionTurnoPacComponent },
+  // { path: 'informes', component: InformesComponent, canActivate: [AdminGuard]},
+  { path: 'informes', component: InformesComponent } ,
   { path: 'pacientes', component: PacientesComponent },
-
   // { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
   { path: 'usuarios', component: UsuariosComponent},
   { path: 'login', loadChildren: () => import('./paginas/login/login.module').then(m => m.LoginModule) }
