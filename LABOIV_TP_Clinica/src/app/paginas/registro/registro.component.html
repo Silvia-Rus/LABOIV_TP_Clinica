@@ -4,7 +4,13 @@
 <app-pre-registro (rol)="setRol($event)" (esAdmin)="setEsAdmin($event)"></app-pre-registro>
 </div>
 <ng-template #then_content>
-  <div class="container bg-light rounded">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <div class="container bg-light rounded animate__animated animate__backInRight">
     <main>
       <div class="py-5 text-center">
         <h2>Registro {{this.rol}}</h2>

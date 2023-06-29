@@ -1,8 +1,13 @@
-
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
   <body class="text-center">
   <app-acceso-directo (user)="setUser($event)"></app-acceso-directo>
     <main class="form-signin"><br>
-      <div class ="containerPrincipal">
+      <div class ="containerPrincipal animate__animated animate__backInUp">
       <div class="rounded container bg-light"> <br>
         <form (ngSubmit)="login()" [formGroup]="loginUsuario">
           <img class="mb-4" src="../assets/icono.png" alt="" width="30%" height="30%">
