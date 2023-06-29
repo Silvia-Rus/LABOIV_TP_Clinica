@@ -12,6 +12,8 @@ import { Usuario } from 'src/app/clases/usuario';
 export class PreRegistroComponent implements OnInit {
 
   @Output() rol = new EventEmitter<string>();
+  @Output() esAdmin = new EventEmitter<any>();
+
 
   constructor(private router: Router, private auth: AuthService, public st: StorageService) { }
 
@@ -20,22 +22,15 @@ export class PreRegistroComponent implements OnInit {
   ngOnInit() {
     this.st.usuarioObj = new Usuario('', '', '', '', '', '', '', '', []);
     this.auth.getAuth().subscribe(res => {
-      if(res != null){ this.st.getUser(res?.email); }
+      if(res != null){ this.st.getUser(res?.email);
+      }
       })
   }
 
-  registrarPaciente()
+  registrar(tipoUser: any)
   {
-    this.rol.emit('Paciente');    
-  }
+    this.rol.emit(tipoUser);
+    this.esAdmin.emit(this.st.usuarioObj.rol == 'Admin');   
 
-  registrarEspecialista()
-  {
-    this.rol.emit('Especialista');
-  }
-
-  registrarAdmin()
-  {
-    this.rol.emit('Admin');
   }
 }

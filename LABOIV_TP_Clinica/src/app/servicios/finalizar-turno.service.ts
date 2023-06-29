@@ -40,6 +40,35 @@ export class FinalizarTurnoService {
     return retorno;
     }
 
+
+  async reseniarTurno(turno: any){
+    var retorno = false;
+    const { value: text } = await Swal.fire({
+      title: 'Finalizar',
+      input: 'textarea',
+      inputLabel: 'Añada una reseña',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#198754',
+      confirmButtonText: 'Reseñar',
+      cancelButtonText: 'Volver',
+      // inputPlaceholder: 'Introduzca el motivo de cancelación',
+      inputAttributes: {
+        'aria-label': 'Type your message here'
+      },
+      showCancelButton: true
+    });
+    
+    if (text) {
+      this.st.reseniarTurno(turno, text);
+      retorno = true;
+    }
+    else
+    {
+      this.alert.lanzarAlertaError("Reseña no grabada.")
+    }
+    return retorno;
+    }
+
     async verResenia(turno: Turno){
     
       await Swal.fire({

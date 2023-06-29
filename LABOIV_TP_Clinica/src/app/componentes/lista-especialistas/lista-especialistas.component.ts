@@ -95,6 +95,7 @@ export class ListaEspecialistasComponent implements OnInit {
   }
 
   crearListaTurnosLibres(espta: any){
+    this.listaTurnosActivosEsp = [];
     for(let t of this.listaTurnos)
     {
       if(t.esptaEmail == espta.email && t.estado == 'nuevo')

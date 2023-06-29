@@ -68,6 +68,9 @@ export class TablaTurnosComponent implements OnInit {
       case 'encuesta':
          this.al.lanzarAlertaExito('aquí irá la encuesta')
          break;
+      case 'reseniar':
+        this.finT.reseniarTurno(turno)
+        break;
     }
 
   }

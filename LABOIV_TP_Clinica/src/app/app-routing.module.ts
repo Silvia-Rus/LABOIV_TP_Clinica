@@ -12,12 +12,14 @@ import { CancelarTurnoComponent } from './paginas/cancelar-turno/cancelar-turno.
 import { GestionTurnoEsptaComponent } from './paginas/gestion-turno-espta/gestion-turno-espta.component';
 import { GestionTurnoPacComponent } from './paginas/gestion-turno-pac/gestion-turno-pac.component';
 import { PacientesComponent } from './paginas/pacientes/pacientes.component';
+import { HomeEsperaComponent } from './paginas/home-espera/home-espera.component';
 
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'home-espera', component: HomeEsperaComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'mi-perfil', component: MiPerfilComponent },
   { path: 'sacar-turno', component: SacarTurnoComponent },

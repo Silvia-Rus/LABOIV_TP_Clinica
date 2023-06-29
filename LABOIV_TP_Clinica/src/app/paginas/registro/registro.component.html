@@ -1,7 +1,7 @@
 
 <br> <br> <br>
 <div  *ngIf="!rol; else then_content">
-<app-pre-registro (rol)="setRol($event)"></app-pre-registro>
+<app-pre-registro (rol)="setRol($event)" (esAdmin)="setEsAdmin($event)"></app-pre-registro>
 </div>
 <ng-template #then_content>
   <div class="container bg-light rounded">

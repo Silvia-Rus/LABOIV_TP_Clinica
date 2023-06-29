@@ -15,11 +15,10 @@ export class ListaUsuariosComponent implements OnInit {
   @Input() listaItems: any;
   @Input() tipoUser: any;
   @Input() verificado: any;
-  verTodos = false;
+  verTodos = true;
 
   ngOnInit() {
   }
-
   verificarUsuario(usuario: any)
   {
     this.st.aprobarUser(usuario);

@@ -310,6 +310,27 @@ export class StorageService {
     });
   }
 
+  reseniarTurno(t: Turno, resenia: string){
+    firebase
+    .firestore()
+    .collection('turnos')
+    .where('clave','==', t.clave)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.update({
+          resenia: resenia
+        }).then(()=>{
+          this.alerta.lanzarAlertaExito("Turno reseñado.");
+        });
+      });
+    })
+    .catch((error) => {
+      console.log('Error cancelando: ', error);
+    });
+
+  }
+
   cambiarEstadoTurno(t: Turno, accion: string, motivo = ''){
     firebase
     .firestore()

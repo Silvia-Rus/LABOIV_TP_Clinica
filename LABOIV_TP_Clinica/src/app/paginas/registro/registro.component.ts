@@ -3,8 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { CaptchaService } from 'src/app/servicios/captcha.service';
-
-
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/clases/usuario';
 
 
@@ -18,12 +17,15 @@ export class RegistroComponent implements OnInit {
   archivos: FileList[] = [];
   form!: FormGroup;
   rol: string = ''; 
+  esAdmin = false;
   especialidades: string[] = [];
 
   constructor(private readonly fb: FormBuilder,
               private db: AuthService,
               private st: StorageService,
-              public c: CaptchaService
+              public c: CaptchaService,
+              private router: Router
+
               ) { }
 
   ngOnInit() : void {
@@ -56,6 +58,11 @@ export class RegistroComponent implements OnInit {
   setRol(rol: string)
   {
     this.rol = rol;
+  }
+
+  setEsAdmin(esAdmin: any)
+  {
+    this.esAdmin = esAdmin;
   }
 
   atras()
@@ -98,7 +105,17 @@ export class RegistroComponent implements OnInit {
                                       this.rol,
                                       this.form.value.obraSocial, 
                                       this.especialidades);
-        this.db.registro(usuario, this.archivos);
+        this.db.registro(usuario, this.archivos).then(()=>{
+          if(this.esAdmin)
+          {
+            this.router.navigate(['/home']);
+          }
+          else
+          {
+            this.router.navigate(['/home-espera']);
+          }
+
+        });
       }
     })
   }

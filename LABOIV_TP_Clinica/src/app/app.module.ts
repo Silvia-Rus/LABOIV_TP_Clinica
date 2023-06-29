@@ -45,6 +45,7 @@ import { RegistroHistoriaComponent } from './paginas/registro-historia/registro-
 import { HistoriaClinicaComponent } from './componentes/historia-clinica/historia-clinica.component';
 import { CardsUsuariosComponent } from './componentes/cards-usuarios/cards-usuarios.component';
 import { PacientesComponent } from './paginas/pacientes/pacientes.component';
+import { HomeEsperaComponent } from './paginas/home-espera/home-espera.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAsMi9zxscXsbA_0befCml62yl9e8qoHlg",
@@ -81,7 +82,8 @@ const firebaseConfig = {
     RegistroHistoriaComponent,
     HistoriaClinicaComponent,
     CardsUsuariosComponent,
-    PacientesComponent
+    PacientesComponent,
+    HomeEsperaComponent
   ],
   imports: [
     BrowserModule,

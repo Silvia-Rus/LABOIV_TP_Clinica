@@ -6,28 +6,84 @@
       <br>
       <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-4 fw-normal">Turnos</h1>
-        <p class="fs-5 text-muted">Filtrar por</p>
-          <div class="btn-group" role="group">
-            <div *ngFor="let esp of listaEspecialidades">
-            <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)="enviarFiltroEsp(esp)">{{esp}}</button>
-            </div>
-          </div>
-          <br>
-          <br>
-           <!-- caja de búsqueda -->
-          <div class="d-flex justify-content-center">
-            <div class="input-group input-group-sm mb-3" style="width: 50%;">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button" (click)="enviarFiltroDni(dni.value)">Buscar paciente</button>
-              </div>
-              <input #dni type="text" class="form-control small" placeholder="DNI del paciente" aria-label="" aria-describedby="basic-addon1">
-            </div>
-          </div>
+        <button type="button" (click)="this.traerTurnos()" class="btn btn-success">Lista completa</button>
 
+        <br>
+        <br>
+        <p class="fs-5 text-muted">Filtrar por</p>
+          <select (change)="onChange(campoForm.value)"
+            #campoForm
+            class="btn btn-secondary dropdown-toggle btn-sm"  data-bs-toggle="dropdown">
+              <option value="pacDni">DNI del Paciente</option>
+              <option value="dia">Fecha</option>
+              <option value="diaSemana">Día de la Semana</option>
+              <option value="hora">Hora</option>
+              <option value="pacApellido">Apellido del Paciente</option>
+              <option value="pacNombre">Nombre del Paciente</option>
+              <option value="estado">Estado</option>
+              <option value="especialidad">Especialidad</option>
+          </select>
+          <br>
+          <br>
+          <div *ngIf="campoAMostrar=='pacDni' || campoAMostrar=='pacApellido' || campoAMostrar=='pacNombre'">
+            <div class="d-flex justify-content-center">
+              <div class="input-group input-group-sm mb-3" style="width: 50%;">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary" type="button" (click)="this.buscar(campoAMostrar, valor.value.trim())">Buscar</button>
+                </div>
+                <input (keyup.enter)="this.buscar(campoAMostrar, valor.value.trim())" #valor type="text" class="form-control small" placeholder="" aria-label="" aria-describedby="basic-addon1">
+              </div>
+            </div>
+          </div>
+          <!-- dia semana -->
+          <div *ngIf="campoAMostrar=='diaSemana'">
+            <select  (change)="onChangeDiaSemana(diaSemana.value)"
+              #diaSemana
+              class="btn btn-outline-secondary dropdown-toggle btn-sm"  data-bs-toggle="dropdown">
+                <option value=""></option>
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miércoles">Miércoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="sábado">Sábado</option>
+            </select>
+          </div>
+          <!-- estado -->
+          <div *ngIf="campoAMostrar=='estado'">
+            <select  (change)="onChangeEstado(estado.value)"
+              #estado
+              class="btn btn-outline-secondary dropdown-toggle btn-sm"  data-bs-toggle="dropdown">
+                <option value=""></option>
+                <option value="nuevo">Nuevo</option>
+                <option value="aceptado">Aceptado</option>
+                <option value="finalizado">Finalizado</option>
+            </select>
+          </div>
+          <!-- especialidad -->
+          <div *ngIf="campoAMostrar=='especialidad'" class="btn-group" role="group" aria-label="Basic example">
+            <div *ngFor="let esp of listaEspecialidades">
+              <button (click)="buscar('especialidad', esp)" type="button" class="btn btn-outline-secondary btn-sm">{{esp}}</button>   
+            </div>
+          </div>
+          <!-- fecha -->
+          <div *ngIf="campoAMostrar=='dia'">
+                <select  (change)="onChangeFecha(fecha.value)"
+                  #fecha
+                  class="btn btn-outline-secondary dropdown-toggle btn-sm"  data-bs-toggle="dropdown">
+                    <option *ngFor="let f of listaFechas" value={{f}}>{{f}}</option>
+                </select>
+          </div>
+          <div *ngIf="campoAMostrar=='hora'">
+            <select  (change)="onChangeHora(hora.value)"
+              #hora
+              class="btn btn-outline-secondary dropdown-toggle btn-sm"  data-bs-toggle="dropdown">
+                <option *ngFor="let h of listaHoras.sort()" value={{h}}>{{h}}</option>
+            </select>
+      </div>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-          <app-tabla-turnos [listaItems]="listaTurnos"
+          <app-tabla-turnos [listaItems]="listaTurnosOk"
                              [filtroEsp]="filtroEsp"
-                             [dni]="dniPac"
                              [rol]="'espta'"
                              (historia)="setHist($event)"
                              (turno)="setTurno($event)">

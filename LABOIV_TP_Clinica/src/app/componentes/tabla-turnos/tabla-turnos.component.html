@@ -40,7 +40,7 @@
                        ||
                        (this.rol == 'pac' && user.email == item.pacEmail)
                        &&
-                    (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado'))">
+                      (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado'))">
                 <td *ngIf="this.rol == 'espta'" >
                   <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
                 </td>
@@ -80,10 +80,16 @@
                   <div class="btn-group" role="group"> 
                   <button type="button" class="btn btn-sm btn-outline-secondary"
                     (click)="accion('resenia', item);">Reseña</button>
-                  <button *ngIf="item.estado == 'finalizado' && this.rol=='Pac'" type="button" class="btn btn-sm btn-outline-secondary"
+                  <button *ngIf="item.estado == 'finalizado' && this.rol=='pac'" type="button" class="btn btn-sm btn-outline-secondary"
                     (click)="accion('encuesta', item);">Encuesta</button>
                   </div>
                 </td> 
+                <td *ngIf="item.estado == 'finalizado' && this.rol=='espta' && item.resenia == ''">
+                    <div class="btn-group" role="group"> 
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                    (click)="accion('reseniar', item);">Reseñar</button>
+                    </div>
+                </td>
             </tr>          
         </tbody>
     </table>
