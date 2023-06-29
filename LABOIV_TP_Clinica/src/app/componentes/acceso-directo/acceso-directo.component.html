@@ -8,9 +8,9 @@
             *ngFor="let user of users; index as i">         
           <li>
             <a class="nav-link py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
-              <button type="button" class="btn btn-outline-secondary btn-sm">
+              <button (click)="logUser(users[i])" type="button" class="btn btn-outline-secondary btn-sm">
               <!-- <img (click)="logUser(users[i])" src="{{this.storage.listaUrlParaVarios[i]}}" class="rounded" width="30" height="30" > -->
-              <img (click)="logUser(users[i])" src="{{this.imagenes[i]}}" class="rounded" width="30" height="30" >
+              <img src="{{this.imagenes[i]}}" class="rounded" width="30" height="30" >
               <div [ngSwitch]="[i]">
                 <small *ngSwitchCase="0">Pac 1</small>
                 <small *ngSwitchCase="1">Pac 2</small>

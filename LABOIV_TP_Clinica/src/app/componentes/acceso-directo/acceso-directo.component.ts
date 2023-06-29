@@ -18,7 +18,7 @@ export class AccesoDirectoComponent implements OnInit {
                   'dewaboc287@byorby.com',  //esp 1
                   'caviji6942@aramask.com', //esp 2
                   'jeyax11606@byorby.com'   //admin
-                 ]
+                  ]
   public imagenes = ['https://firebasestorage.googleapis.com/v0/b/clinicadrarus.appspot.com/o/images%2Fkiben40787%40anwarb.com%2F1686846124111?alt=media&token=f3bf56c8-25fd-442d-bd35-93f68fa0d5b5',
                      'https://firebasestorage.googleapis.com/v0/b/clinicadrarus.appspot.com/o/images%2Fbewig40097%40aramask.com%2F1686846343844?alt=media&token=396f3131-e5a7-4f05-b470-80b46afd10df',
                      'https://firebasestorage.googleapis.com/v0/b/clinicadrarus.appspot.com/o/images%2Fyajabi1842%40byorby.com%2F1686846541459?alt=media&token=61310e01-1ac5-4853-b761-17ad0f7bdd3a',
@@ -29,13 +29,12 @@ export class AccesoDirectoComponent implements OnInit {
 
   ngOnInit() {
     this.storage.getImagenes(this.users);
-    console.log(this.storage.listaUrlParaVarios);
   }
-
-
 
   logUser(user: string)
   {
+    console.log(this.users);
+    console.log(user);
     this.user.emit(user);    
   }
 }

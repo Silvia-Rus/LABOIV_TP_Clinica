@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private auth: AuthService, private fb:FormBuilder, private st:StorageService){ 
       this.loginUsuario = this.fb.group({ 
-        email:['', Validators.required],
+        email:[this.user, Validators.required],
         password:['', Validators.required],
         })
     }
@@ -34,11 +34,9 @@ ngOnInit() {
   }
 
   setUser(user: string){
-    this.loginUsuario.value.email = user;
-    this.loginUsuario.value.password  = '123456';
-    this.login();
+    this.loginUsuario = this.fb.group({
+      email: [user],
+      password: ['123456'],
+    });
   }
-
-
-
 }
