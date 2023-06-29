@@ -1,7 +1,13 @@
 <main *ngIf="logueado|async as user" role="main">
     <!-- <div *ngIf="logueado|async as user; else then_content"> -->
   
-    <h5>{{this.filtroEsp}}</h5>
+    <!-- <h5>{{this.filtroEsp}}</h5> -->
+    <div *ngIf="this.campo == ''; else campo_valor">
+        <h5>Lista completa</h5>
+    </div>
+    <ng-template #campo_valor>
+        <h5>{{this.campo}}: {{this.valor}}</h5>
+    </ng-template>
     <table class="table" style="width: 100%; align-self: center;">
         <thead>
             <tr>
@@ -30,17 +36,11 @@
             </tr>
         </thead>
         <tbody *ngFor="let item of listaItems">
-            <tr *ngIf="((this.rol == 'espta' && 
-                      ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
-                       (this.dni!= '' && item.pacDni == this.dni)) && 
-                       user.email == item.esptaEmail)
+            <tr *ngIf="((this.rol == 'espta' && user.email == item.esptaEmail)
                        ||
-                       (this.rol == 'pac' && 
-                       ((this.filtroEsp != '' && item.especialidad == this.filtroEsp) ||
-                       (this.dni != '' && item.esptaDni == this.dni)) && 
-                       user.email == item.pacEmail))
+                       (this.rol == 'pac' && user.email == item.pacEmail)
                        &&
-                       (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado')">
+                    (item.estado == 'nuevo' || item.estado == 'aceptado' || item.estado == 'finalizado'))">
                 <td *ngIf="this.rol == 'espta'" >
                   <small>{{item.pacApellido}}, {{item.pacNombre}}</small>
                 </td>

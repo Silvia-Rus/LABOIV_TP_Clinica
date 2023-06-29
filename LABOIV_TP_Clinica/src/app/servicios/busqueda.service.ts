@@ -10,18 +10,15 @@ constructor() { }
 buscar(campo: any, valor: any, lista: any) //se envía a la tabla listaTurnos
 {
   let listaBufer = [];
-  let listaBuferDos = lista;
-  console.log(lista);
-  console.log(lista[0][campo]);
+  console.log(campo);
+  console.log(valor);
   if(campo != '' || valor != '')
-  {
-    
-    console.log("llega?");
+  console.log('llega');
+  {   
     for(let i of lista)
     {
-
+      console.log(i[campo]);
       var valorBufer = i[campo];
-      console.log(valorBufer);
       if(valorBufer == valor)
       {
         listaBufer.push(i);
@@ -30,7 +27,5 @@ buscar(campo: any, valor: any, lista: any) //se envía a la tabla listaTurnos
     return listaBufer;
   }
   return lista;
-  console.log(listaBufer);
-  console.log(lista);
 }
 }

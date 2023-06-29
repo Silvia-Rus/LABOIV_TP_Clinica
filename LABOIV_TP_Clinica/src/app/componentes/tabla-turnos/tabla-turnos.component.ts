@@ -19,6 +19,8 @@ export class TablaTurnosComponent implements OnInit {
   @Input() filtroEsp: any = '';
   @Input() dni: any = '';
   @Input() rol: any = '';
+  @Input() campo: any = '';
+  @Input() valor: any = '';
   @Output() historia = new EventEmitter<boolean>();
   @Output() turno = new EventEmitter<Turno>();
 
@@ -34,6 +36,8 @@ export class TablaTurnosComponent implements OnInit {
   ngOnInit() {
     console.log(this.listaItems);
   }
+
+
 
   accion(tipo: string, turno: any)
   {

@@ -13,11 +13,20 @@ export class GestionTurnoPacComponent implements OnInit {
 
   constructor(private auth: AuthService, public st: StorageService, private busq: BusquedaService) { }
   listaEspecialidades: any[] = [];
+  listaFechas: any[] = [];
+  listaHoras: any[] = [];
   listaTurnos: any;
+  listaTurnosOk: any;
   dniEsp: any;
   filtroEsp: any;
   campo = '';
   valor = '';
+  campoAMostrar = 'esptaDni';
+  diaSemana = 'lunes';
+  estado = '';
+  especialidad = '';
+  fecha = '';
+  hora = '';
 
 
   ngOnInit() {
@@ -29,17 +38,20 @@ export class GestionTurnoPacComponent implements OnInit {
         {
           this.listaEspecialidades= [];
           this.traerEspecialidades(res.email);
+          this.traerFechas(res.email);
+          this.traerHoras(res.email);
           console.log(this.listaEspecialidades);
         }
       }
       });
-      this.traerTurnos()
+      this.traerTurnos();
+
+
   }
 
   traerEspecialidades(email: any)
   {
     this.listaEspecialidades= [];
-    console.log("llega aquí");
     this.st.getCollection('turnos', 'dia')
             .subscribe((datos) =>
               {
@@ -63,10 +75,64 @@ export class GestionTurnoPacComponent implements OnInit {
               })
   }
 
+  traerFechas(email: any)
+  {
+    this.listaFechas= [];
+    this.st.getCollection('turnos', 'dia')
+            .subscribe((datos) =>
+              {
+                this.listaTurnos = datos;
+                for(let t of this.listaTurnos)
+                {
+                  let duplicado = false;
+                  if(t.pacEmail == email)
+                  {
+                      for(let f of this.listaFechas)
+                      {
+                        if(t.dia== f)
+                        {
+                          duplicado = true;
+                        }
+                      }
+                    if(duplicado){break};
+                    this.listaFechas.push(t.dia);
+                  }
+                }
+              })
+  }
+
+  traerHoras(email: any)
+  {
+    this.listaHoras= [];
+    this.st.getCollection('turnos', 'dia')
+            .subscribe((datos) =>
+              {
+                this.listaTurnos = datos;
+                for(let t of this.listaTurnos)
+                {
+                  let duplicado = false;
+                  if(t.pacEmail == email)
+                  {
+                      for(let h of this.listaHoras)
+                      {
+                        if(t.hora == h)
+                        {
+                          duplicado = true;
+                        }
+                      }
+                    if(duplicado){break};
+                    this.listaHoras.push(t.hora);
+                  }
+                }
+              })
+  }
+
   traerTurnos()
   {
     this.st.getCollection('turnos', 'dia')
-            .subscribe((datos) => {this.listaTurnos = datos;})
+            .subscribe((datos) => {
+                this.listaTurnos = datos; 
+                this.listaTurnosOk = datos;})
   }
 
   enviarFiltroDni(dni: any)
@@ -87,29 +153,42 @@ export class GestionTurnoPacComponent implements OnInit {
   buscar(campo: any, valor: any) //se envía a la tabla listaTurnos
   {
     // this.traerTurnos();
+    console.log(campo);
     console.log(this.listaTurnos);
-    this.listaTurnos = this.busq.buscar(campo, valor, this.listaTurnos);
+    console.log(this.listaTurnosOk);
+    this.listaTurnosOk = this.busq.buscar(campo, valor, this.listaTurnos);
+    this.campo = campo;
+    this.valor = valor;
     console.log(this.listaTurnos);
-    // this.traerTurnos();
-    // let listaBufer = [];
-    // if(campo != '' || valor != '')
-    // {
-    //   for(let i of this.listaTurnos)
-    //   {
-    //     console.log(this.listaTurnos[0]["esptaEmail"]);
-    //     console.log(this.listaTurnos[0][campo]);
-    //     var valorBufer = this.listaTurnos[0][campo];
-
-    //     if(valorBufer == valor)
-    //     {
-    //       listaBufer.push(i);
-    //     }
-    //   }
-    //   this.listaTurnos = listaBufer;
-    // }
-    // console.log(listaBufer);
-    // console.log(this.listaTurnos);
+    console.log(this.listaTurnosOk);
   }
+
+  onChange(value: any) {
+    this.campoAMostrar = value;
+  }
+
+  onChangeDiaSemana(value: any) {
+    this.diaSemana = value;
+    this.listaTurnosOk = this.busq.buscar('diaSemana', this.diaSemana, this.listaTurnos);
+  }
+
+  onChangeEstado(value: any){
+    this.estado = value;
+    this.listaTurnosOk = this.busq.buscar('estado', this.estado, this.listaTurnos);
+  }
+
+  onChangeFecha(value: any){
+    this.fecha = value;
+    this.listaTurnosOk = this.busq.buscar('dia', this.fecha, this.listaTurnos);
+  }
+
+  onChangeHora(value: any){
+    this.hora = value;
+    this.listaTurnosOk = this.busq.buscar('hora', this.hora, this.listaTurnos);
+  }
+
+
+
 
   
 
