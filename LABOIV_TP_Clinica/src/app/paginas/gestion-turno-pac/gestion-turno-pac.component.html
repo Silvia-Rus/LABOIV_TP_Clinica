@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
 <body> 
   <div class="container py-3">
@@ -26,6 +27,11 @@
               <input #dni type="text" class="form-control small" placeholder="DNI del doctor" aria-label="" aria-describedby="basic-addon1">
             </div>
           </div>
+
+          <button class="btn btn-outline-secondary" 
+                  type="button" 
+                  (click)="buscar('esptaEmail', 'dewaboc287@byorby.com')">test</button>
+         
 
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
           <app-tabla-turnos [listaItems]="listaTurnos"

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { AlertService } from 'src/app/servicios/alert.service';
 import * as moment from 'moment';
+import { ExportPDFService } from 'src/app/servicios/exportPDF.service';
+
 
 @Component({
   selector: 'app-cards-usuarios',
@@ -10,7 +12,7 @@ import * as moment from 'moment';
 })
 export class CardsUsuariosComponent implements OnInit {
 
-  constructor(public st: StorageService, public alerta: AlertService) { }
+  constructor(public st: StorageService, public alerta: AlertService, public pdf: ExportPDFService) { }
 
   @Input() listaItems: any;
   @Input() tipoUser: any;
@@ -19,10 +21,10 @@ export class CardsUsuariosComponent implements OnInit {
   @Input() origen: any; //admin //espta
 
 
-
   historia: any; //esto es lo que hay que enviar al componente
   verHistoria = false;
   listaHistorias: any;
+
 
   ngOnInit() {
     
@@ -73,6 +75,18 @@ export class CardsUsuariosComponent implements OnInit {
     }
     console.log(listaTurnosPac[0].dia);
     this.alerta.lanzarMensajeTurnos(listaTurnosPac);
+  }
+
+  descargarTurnos(pacEmail: any)
+  {
+    if(this.listaTurnos.length > 0)
+    {
+      this.pdf.exportTurnos(this.listaTurnos, '', pacEmail);
+    }
+    else{
+      this.alerta.lanzarAlertaError("No tiene turnos todavía");
+    }
+
   }
 
 

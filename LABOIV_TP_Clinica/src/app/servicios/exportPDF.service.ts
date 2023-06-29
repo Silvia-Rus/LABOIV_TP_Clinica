@@ -59,7 +59,7 @@ constructor() {}
   PDF.save('historia-clínica.pdf'); 
  }
 
- exportTurnos(lista: Turno[], especialidad: any){
+ exportTurnos(lista: Turno[], especialidad = '', pacEmail = ''){
   var line = 70;
   let PDF = new jsPDF('p', 'mm', 'a4',);
   let pageHeight = (PDF.internal.pageSize.height) - 10;
@@ -71,13 +71,21 @@ constructor() {}
   PDF.text(`Turnos de: ${lista[0].pacNombre} ${lista[0].pacApellido}`, 70, 30);
   (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
   //datos
-  PDF.text(`ESPECIALIDAD: ${especialidad}`, 15, line);
-  (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
+  if(especialidad != ''){
+    PDF.text(`ESPECIALIDAD: ${especialidad}`, 15, line);
+    (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
+  }
+
   for(let t of lista)
   {
-    if(t.especialidad == especialidad)
+    if(especialidad != '' && t.especialidad == especialidad)
     {
-      PDF.text(`-> Dr: ${t.esptaNombre} ${t.esptaApellido} - ${t.dia} ${t.hora} - ${t.estado} `, 15, line) ;
+        PDF.text(`-> Dr: ${t.esptaNombre} ${t.esptaApellido} - ${t.dia} ${t.hora} - ${t.estado} `, 15, line) ;
+        (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
+    }
+    else if(pacEmail != '' && t.pacEmail == pacEmail)
+    {
+      PDF.text(`-> Dr: ${t.esptaNombre} ${t.esptaApellido} - ${t.dia} ${t.hora}`, 15, line) ;
       (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
     }
   } 
