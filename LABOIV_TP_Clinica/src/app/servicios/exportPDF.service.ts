@@ -81,9 +81,7 @@ constructor() {}
       (line > pageHeight) ? (PDF.addPage(), line = 20) : line += 10;
     }
   } 
-
   PDF.save('turnos.pdf'); 
-
  }
 
 }

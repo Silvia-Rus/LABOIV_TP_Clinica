@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StorageService } from 'src/app/servicios/storage.service';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -13,6 +15,7 @@ export class ListaUsuariosComponent implements OnInit {
   @Input() listaItems: any;
   @Input() tipoUser: any;
   @Input() verificado: any;
+  verTodos = false;
 
   ngOnInit() {
   }
@@ -20,6 +23,17 @@ export class ListaUsuariosComponent implements OnInit {
   verificarUsuario(usuario: any)
   {
     this.st.aprobarUser(usuario);
+  }
+
+  descargarUsers() {
+    var table_elt = document.getElementById("users-table");
+    var workbook = XLSX.utils.table_to_book(table_elt);
+    var ws = workbook.Sheets["Sheet1"];
+    XLSX.writeFile(workbook, "usuarios.xlsx");
+  }
+
+  setVerTodos(valor: boolean){
+    this.verTodos = valor;
   }
 
 
